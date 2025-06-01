@@ -1,0 +1,2 @@
+# exclude all object files
+build/*
