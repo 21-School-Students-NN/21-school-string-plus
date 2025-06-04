@@ -9,7 +9,7 @@ SOURCE_DIR	=		./
 BUILD_DIR	=		./build
 
 # list of source ifles and objects
-SOURCE		=		hello.c
+SOURCE		=		$(wildcard *.c)
 OBJECTS		=		$(patsubst %.c, $(BUILD_DIR)/%.o, $(SOURCE))
 
 # main target of Makefile
