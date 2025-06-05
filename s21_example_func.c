@@ -3,4 +3,4 @@
 
 #include "s21_string.h"
 
-void s21_example_func() { printf("Hello, world!\n"); }
+void s21_example_func(void) { printf("Hello, world!\n"); }
