@@ -1,0 +1,1 @@
+#include "../headers/s21_string.h"
