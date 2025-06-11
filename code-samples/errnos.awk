@@ -3,11 +3,11 @@
 BEGIN {
     # Initialize arrays to store error codes
     linux_const[0] = ""
-    linux_desc[""] = ""
+    linux_desc[0] = ""
     linux_count = 1
     
     xnu_const[0] = ""
-    xnu_desc[""] = ""
+    xnu_desc[0] = ""
     xnu_count = 1
 }
 
@@ -27,7 +27,7 @@ FILENAME == "headers/errno-linux.h" {
         gsub(/[ \t]*\*\/[ \t]*$/, "", desc)
         
         linux_const[value] = name
-        linux_desc[name] = desc
+        linux_desc[value] = desc
         linux_count++
     }
 }
@@ -48,7 +48,7 @@ FILENAME == "headers/errno-xnu.h" {
         gsub(/[ \t]*\*\/[ \t]*$/, "", desc)
         
         xnu_const[value] = name
-        xnu_desc[name] = desc
+        xnu_desc[value] = desc
         xnu_count++
     }
 }
@@ -64,9 +64,9 @@ END {
     for (i = 0; i < linux_count; i++) {
         ln = linux_const[i]
         xn = xnu_const[i]
-        if (ln != "" && linux_desc[ln] == xnu_desc[ln] && ln == xn) {
+        if (ln != "" && linux_desc[i] == xnu_desc[i] && ln == xn) {
             printf "#define %-20s %-5s /* %s */\n", 
-                   ln, i, linux_desc[ln]
+                   ln, i, linux_desc[i]
         }
     }
     print ""
@@ -77,9 +77,9 @@ END {
     for (i = 0; i < linux_count; i++) {
         ln = linux_const[i]
         xn = xnu_const[i]
-        if (ln != "" && (linux_desc[ln] != xnu_desc[ln] || ln != xn)) {
+        if (ln != "" && (linux_desc[i] != xnu_desc[i] || ln != xn)) {
             printf "#define %-20s %-5s /* %s */\n", 
-                   ln, i, linux_desc[ln]
+                   ln, i, linux_desc[i]
         }
     }
     print "#endif /* __linux__ */"
@@ -91,9 +91,9 @@ END {
     for (i = 0; i < xnu_count; i++) {
         xn = xnu_const[i]
         ln = linux_const[i]
-        if (xn != "" && (linux_desc[xn] != xnu_desc[xn] || xn != ln)) {
+        if (xn != "" && (linux_desc[i] != xnu_desc[i] || xn != ln)) {
             printf "#define %-20s %-5s /* %s */\n", 
-                   xn, i, xnu_desc[xn]
+                   xn, i, xnu_desc[i]
         }
     }
     print "#endif /* __APPLE__ */"

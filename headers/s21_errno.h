@@ -45,8 +45,7 @@
 #define ENOSYS               38    /* Function not implemented */
 #define ENOTEMPTY            39    /* Directory not empty */
 #define ELOOP                40    /* Too many levels of symbolic links */
-// TODO: check what wrang with errno 41 and it's comment | look into errno-linux.h
-#define UNKNOWN              41    /* Unknown error 134 */
+#define UNKNOWN              41    /* Unknown error 41 */
 #define ENOMSG               42    /* No message of desired type */
 #define EIDRM                43    /* Identifier removed */
 #define ECHRNG               44    /* Channel number out of range */
@@ -63,8 +62,7 @@
 #define ENOANO               55    /* No anode */
 #define EBADRQC              56    /* Invalid request code */
 #define EBADSLT              57    /* Invalid slot */
-// TODO: check what wrang with errno 58 and it's comment | look into errno-linux.h
-#define UNKNOWN              58    /* Unknown error 134 */
+#define UNKNOWN              58    /* Unknown error 58 */
 #define EBFONT               59    /* Bad font file format */
 #define ENOSTR               60    /* Device not a stream */
 #define ENODATA              61    /* No data available */
