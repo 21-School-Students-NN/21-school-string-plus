@@ -1,5 +1,5 @@
-#ifndef _SYS_ERRNO_H_
-#define _SYS_ERRNO_H_
+#ifndef S21_SYS_ERRNO_H_
+#define S21_SYS_ERRNO_H_
 
 /* Common error codes */
 #define EPERM                1     /* Operation not permitted */
@@ -31,8 +31,8 @@
 #define EPIPE                32    /* Broken pipe */
 #define EDOM                 33    /* Numerical argument out of domain */
 
-#ifdef __linux__
-/* Linux-specific error codes */
+#ifdef __linux__ /* Linux-specific error codes */
+
 #define ENXIO                6     /* No such device or address */
 #define EAGAIN               11    /* Resource temporarily unavailable */
 #define EBUSY                16    /* Device or resource busy */
@@ -45,6 +45,8 @@
 #define ENOSYS               38    /* Function not implemented */
 #define ENOTEMPTY            39    /* Directory not empty */
 #define ELOOP                40    /* Too many levels of symbolic links */
+// TODO: check what wrang with errno 41 and it's comment | look into errno-linux.h
+#define UNKNOWN              41    /* Unknown error 134 */
 #define ENOMSG               42    /* No message of desired type */
 #define EIDRM                43    /* Identifier removed */
 #define ECHRNG               44    /* Channel number out of range */
@@ -61,6 +63,8 @@
 #define ENOANO               55    /* No anode */
 #define EBADRQC              56    /* Invalid request code */
 #define EBADSLT              57    /* Invalid slot */
+// TODO: check what wrang with errno 58 and it's comment | look into errno-linux.h
+#define UNKNOWN              58    /* Unknown error 134 */
 #define EBFONT               59    /* Bad font file format */
 #define ENOSTR               60    /* Device not a stream */
 #define ENODATA              61    /* No data available */
@@ -137,63 +141,27 @@
 #define ERFKILL              132   /* Operation not possible due to RF-kill */
 #define EHWPOISON            133   /* Memory page has hardware error */
 #define UNKNOWN              134   /* Unknown error 134 */
-#define UNKNOWN              134   /* Unknown error 134 */
-#define UNKNOWN              134   /* Unknown error 134 */
 #endif /* __linux__ */
 
-#ifdef __APPLE__
-/* XNU-specific error codes */
+#ifdef __APPLE__ /* XNU-specific error codes */
+
 #define ENXIO                6     /* Device not configured */
-#define EAGAIN               35    /* Resource temporarily unavailable */
+#define EDEADLK              11    /* Resource deadlock avoided */
 #define EBUSY                16    /* Device / Resource busy */
 #define EXDEV                18    /* Cross-device link */
 #define ENODEV               19    /* Operation not supported by device */
 #define ERANGE               34    /* Result too large */
-#define EDEADLK              11    /* Resource deadlock avoided */
-#define ENAMETOOLONG         63    /* File name too long */
-#define ENOLCK               77    /* No locks available */
-#define ENOSYS               78    /* Function not implemented */
-#define ENOTEMPTY            66    /* Directory not empty */
-#define ELOOP                62    /* Too many levels of symbolic links */
-#define ENOMSG               91    /* No message of desired type */
-#define EIDRM                90    /* Identifier removed */
-#define ENOTSUP              45    /* Operation not supported */
-#define ENOSTR               99    /* Not a STREAM */
-#define ENODATA              96    /* No message available on STREAM */
-#define ETIME                101   /* STREAM ioctl timeout */
-#define ENOSR                98    /* No STREAM resources */
-#define EREMOTE              71    /* Too many levels of remote in path */
-#define ENOLINK              97    /* Reserved */
-#define EPROCLIM             67    /* Too many processes */
-#define EPROTO               100   /* Protocol error */
-#define EBADRPC              72    /* RPC struct is bad */
-#define EMULTIHOP            95    /* Reserved */
-#define ERPCMISMATCH         73    /* RPC version wrong */
-#define EBADMSG              94    /* Bad message */
-#define EPROGUNAVAIL         74    /* RPC prog. not avail */
-#define EOVERFLOW            84    /* Value too large to be stored in data type */
-#define EPROGMISMATCH        75    /* Program version wrong */
-#define EPROCUNAVAIL         76    /* Bad procedure for program */
-#define EFTYPE               79    /* Inappropriate file type or format */
-#define EAUTH                80    /* Authentication error */
-#define ENEEDAUTH            81    /* Need authenticator */
-#define EPWROFF              82    /* Device power is off */
-#define EDEVERR              83    /* Device error, e.g. paper out */
-#define EILSEQ               92    /* Illegal byte sequence */
-#define EBADEXEC             85    /* Bad executable */
-#define EBADARCH             86    /* Bad CPU type in executable */
-#define ESHLIBVERS           87    /* Shared library version mismatch */
-#define EUSERS               68    /* Too many users */
-#define EBADMACHO            88    /* Malformed Macho file */
+#define EAGAIN               35    /* Resource temporarily unavailable */
+#define EINPROGRESS          36    /* Operation now in progress */
+#define EALREADY             37    /* Operation already in progress */
 #define ENOTSOCK             38    /* Socket operation on non-socket */
 #define EDESTADDRREQ         39    /* Destination address required */
 #define EMSGSIZE             40    /* Message too long */
 #define EPROTOTYPE           41    /* Protocol wrong type for socket */
 #define ENOPROTOOPT          42    /* Protocol not available */
-#define ENOATTR              93    /* Attribute not found */
 #define EPROTONOSUPPORT      43    /* Protocol not supported */
 #define ESOCKTNOSUPPORT      44    /* Socket type not supported */
-#define EOPNOTSUPP           102   /* Operation not supported on socket */
+#define ENOTSUP              45    /* Operation not supported */
 #define EPFNOSUPPORT         46    /* Protocol family not supported */
 #define EAFNOSUPPORT         47    /* Address family not supported by protocol family */
 #define EADDRINUSE           48    /* Address already in use */
@@ -202,27 +170,59 @@
 #define ENETUNREACH          51    /* Network is unreachable */
 #define ENETRESET            52    /* Network dropped connection on reset */
 #define ECONNABORTED         53    /* Software caused connection abort */
-#define ENOPOLICY            103   /* No such policy registered */
 #define ECONNRESET           54    /* Connection reset by peer */
 #define ENOBUFS              55    /* No buffer space available */
 #define EISCONN              56    /* Socket is already connected */
-#define ELAST                106   /* Must be equal largest errno */
-#define EQFULL               106   /* Interface output queue is full */
 #define ENOTCONN             57    /* Socket is not connected */
 #define ESHUTDOWN            58    /* Can't send after socket shutdown */
 #define ETOOMANYREFS         59    /* Too many references: can't splice */
 #define ETIMEDOUT            60    /* Operation timed out */
 #define ECONNREFUSED         61    /* Connection refused */
+#define ELOOP                62    /* Too many levels of symbolic links */
+#define ENAMETOOLONG         63    /* File name too long */
 #define EHOSTDOWN            64    /* Host is down */
 #define EHOSTUNREACH         65    /* No route to host */
-#define EALREADY             37    /* Operation already in progress */
-#define EINPROGRESS          36    /* Operation now in progress */
-#define ESTALE               70    /* Stale NFS file handle */
+#define ENOTEMPTY            66    /* Directory not empty */
+#define EPROCLIM             67    /* Too many processes */
+#define EUSERS               68    /* Too many users */
 #define EDQUOT               69    /* Disc quota exceeded */
+#define ESTALE               70    /* Stale NFS file handle */
+#define EREMOTE              71    /* Too many levels of remote in path */
+#define EBADRPC              72    /* RPC struct is bad */
+#define ERPCMISMATCH         73    /* RPC version wrong */
+#define EPROGUNAVAIL         74    /* RPC prog. not avail */
+#define EPROGMISMATCH        75    /* Program version wrong */
+#define EPROCUNAVAIL         76    /* Bad procedure for program */
+#define ENOLCK               77    /* No locks available */
+#define ENOSYS               78    /* Function not implemented */
+#define EFTYPE               79    /* Inappropriate file type or format */
+#define EAUTH                80    /* Authentication error */
+#define ENEEDAUTH            81    /* Need authenticator */
+#define EPWROFF              82    /* Device power is off */
+#define EDEVERR              83    /* Device error, e.g. paper out */
+#define EOVERFLOW            84    /* Value too large to be stored in data type */
+#define EBADEXEC             85    /* Bad executable */
+#define EBADARCH             86    /* Bad CPU type in executable */
+#define ESHLIBVERS           87    /* Shared library version mismatch */
+#define EBADMACHO            88    /* Malformed Macho file */
 #define ECANCELED            89    /* Operation canceled */
-#define EOWNERDEAD           105   /* Previous owner died */
+#define EIDRM                90    /* Identifier removed */
+#define ENOMSG               91    /* No message of desired type */
+#define EILSEQ               92    /* Illegal byte sequence */
+#define ENOATTR              93    /* Attribute not found */
+#define EBADMSG              94    /* Bad message */
+#define EMULTIHOP            95    /* Reserved */
+#define ENODATA              96    /* No message available on STREAM */
+#define ENOLINK              97    /* Reserved */
+#define ENOSR                98    /* No STREAM resources */
+#define ENOSTR               99    /* Not a STREAM */
+#define EPROTO               100   /* Protocol error */
+#define ETIME                101   /* STREAM ioctl timeout */
+#define EOPNOTSUPP           102   /* Operation not supported on socket */
+#define ENOPOLICY            103   /* No such policy registered */
 #define ENOTRECOVERABLE      104   /* State not recoverable */
-#define EWOULDBLOCK          EAGAIN /* Operation would block */
+#define EOWNERDEAD           105   /* Previous owner died */
+#define ELAST                106   /* Must be equal largest errno */
 #endif /* __APPLE__ */
 
 #endif /* _SYS_ERRNO_H_ */
