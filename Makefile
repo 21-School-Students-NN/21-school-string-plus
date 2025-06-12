@@ -1,7 +1,8 @@
 # main flag and macros for GCC compiler
 CC				=		gcc
 CFLAGS			=		-Wall -Werror -Wextra -std=c11 -pedantic
-TST_FLAG		=		-lcheck -lsubunit -lm -lrt -lpthread
+TST_FLAG		:=		$(shell pkg-config --cflags --libs check)
+COV_FLAGS		=		-fprofile-arcs -ftest-coverage
 D_FLAGS			=		-g
 R_FLAGS			=		-DNDEBUG -O2
 
@@ -40,9 +41,9 @@ $(OBJ_BUILD_DIR)/%.o: $(LIB_SOURCE_DIR)/%.c | $(OBJ_BUILD_DIR)
 	$(info Building the $@ object file...)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
-test: $(TST_OBJECTS) ../$(LIBRARY)
+test: clean $(TST_OBJECTS) $(LIBRARY)
 	$(info Assembling and running tests...)
-	$(CC) $(CFLAGS) $(TST_FLAG) $^ -o ../$@
+	$(CC) $(CFLAGS) $(TST_FLAG) $(TST_OBJECTS) ../$(LIBRARY) -o ../$@
 	../$@
 
 $(TST_BUILD_DIR)/%.o: $(TST_SOURCE_DIR)/%.c | $(TST_BUILD_DIR)
@@ -51,6 +52,11 @@ $(TST_BUILD_DIR)/%.o: $(TST_SOURCE_DIR)/%.c | $(TST_BUILD_DIR)
 
 gcov_report:
 	$(info Assembling test result into report...)
+	$(CC) $(CFLAGS) --coverage $(TEST_DIR)/test.o $(C_FILES) -lcheck -lsubunit -lm -lrt -lpthread -o repor
+	./repor || true
+	lcov -t "Report" -o $(TEST_DIR)/coverage.info -c -d .
+	genhtml $(TEST_DIR)/coverage.info --output-directory $(TEST_DIR)/report/
+	open $(TEST_DIR)/report/index.html
 
 clean:
 	$(info Cleaning the build artifacts...)

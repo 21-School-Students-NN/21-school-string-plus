@@ -1,6 +1,7 @@
 #include <check.h>
 #include <errno.h>
 #include <string.h>
+#include <stdlib.h>
 
 #include "../headers/s21_string.h"
 #include "../headers/s21_errno.h"

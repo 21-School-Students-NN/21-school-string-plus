@@ -1,9 +1,11 @@
 #include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 #include <check.h>
 
 // #include "../headers/s21_string.h"
 
-// #include "./test_strerror.c"
+#include "./test_strerror.c"
 
 int main(void) {
     int number_failed;
