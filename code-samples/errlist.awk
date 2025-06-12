@@ -7,7 +7,7 @@ BEGIN {
     print ""
 }
 
-/^#define _SYS_ERRNO_H_/ {
+/^#define S21_/ {
     next
 }
 

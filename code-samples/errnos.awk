@@ -6,6 +6,7 @@ BEGIN {
     linux_desc[0] = ""
     linux_count = 1
     
+    # TODO: restore the dictionary string = string. we miss some unique codes in XNU
     xnu_const[0] = ""
     xnu_desc[0] = ""
     xnu_count = 1
@@ -56,7 +57,7 @@ FILENAME == "headers/errno-xnu.h" {
 END {  
     # Print header guard and includes
     print "#ifndef S21_SYS_ERRNO_H_"
-    print "#define S21_SYS_ERRNO_H_"
+    print "#define S21_SYS_ERRNO_H_ 1"
     print ""
     
     # Print common error codes
@@ -74,6 +75,8 @@ END {
     # Print Linux-specific error codes
     print "#ifdef __linux__ /* Linux-specific error codes */"
     print ""
+    print "#define S21_ERRlIST_LEN 134"
+    print ""
     for (i = 0; i < linux_count; i++) {
         ln = linux_const[i]
         xn = xnu_const[i]
@@ -87,6 +90,8 @@ END {
     
     # Print XNU-specific error codes
     print "#ifdef __APPLE__ /* XNU-specific error codes */"
+    print ""
+    print "#define S21_ERRlIST_LEN 106"
     print ""
     for (i = 0; i < xnu_count; i++) {
         xn = xnu_const[i]

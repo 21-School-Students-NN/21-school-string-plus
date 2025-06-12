@@ -2,10 +2,6 @@
 
 _S(0, "Success")
 
-#ifdef S21_SYS_ERRNO_H_
-_S(S21_SYS_ERRNO_H_, "")
-#endif
-
 #ifdef EPERM
 _S(EPERM, "Operation not permitted")
 #endif
@@ -167,10 +163,6 @@ _S(ENOTEMPTY, "Directory not empty")
 _S(ELOOP, "Too many levels of symbolic links")
 #endif
 
-#ifdef UNKNOWN
-_S(UNKNOWN, "Unknown error 134")
-#endif
-
 #ifdef ENOMSG
 _S(ENOMSG, "No message of desired type")
 #endif
@@ -233,10 +225,6 @@ _S(EBADRQC, "Invalid request code")
 
 #ifdef EBADSLT
 _S(EBADSLT, "Invalid slot")
-#endif
-
-#ifdef UNKNOWN
-_S(UNKNOWN, "Unknown error 134")
 #endif
 
 #ifdef EBFONT
@@ -533,14 +521,6 @@ _S(ENOTRECOVERABLE, "State not recoverable")
 
 #ifdef ERFKILL
 _S(ERFKILL, "Operation not possible due to RF-kill")
-#endif
-
-#ifdef EHWPOISON
-_S(EHWPOISON, "Memory page has hardware error")
-#endif
-
-#ifdef UNKNOWN
-_S(UNKNOWN, "Unknown error 134")
 #endif
 
 #endif /* __linux__ */

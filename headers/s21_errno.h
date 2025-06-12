@@ -1,5 +1,5 @@
 #ifndef S21_SYS_ERRNO_H_
-#define S21_SYS_ERRNO_H_
+#define S21_SYS_ERRNO_H_ 1
 
 /* Common error codes */
 #define EPERM                1     /* Operation not permitted */
@@ -33,6 +33,8 @@
 
 #ifdef __linux__ /* Linux-specific error codes */
 
+#define S21_ERRlIST_LEN 134
+
 #define ENXIO                6     /* No such device or address */
 #define EAGAIN               11    /* Resource temporarily unavailable */
 #define EBUSY                16    /* Device or resource busy */
@@ -45,7 +47,6 @@
 #define ENOSYS               38    /* Function not implemented */
 #define ENOTEMPTY            39    /* Directory not empty */
 #define ELOOP                40    /* Too many levels of symbolic links */
-#define UNKNOWN              41    /* Unknown error 41 */
 #define ENOMSG               42    /* No message of desired type */
 #define EIDRM                43    /* Identifier removed */
 #define ECHRNG               44    /* Channel number out of range */
@@ -62,7 +63,6 @@
 #define ENOANO               55    /* No anode */
 #define EBADRQC              56    /* Invalid request code */
 #define EBADSLT              57    /* Invalid slot */
-#define UNKNOWN              58    /* Unknown error 58 */
 #define EBFONT               59    /* Bad font file format */
 #define ENOSTR               60    /* Device not a stream */
 #define ENODATA              61    /* No data available */
@@ -137,11 +137,11 @@
 #define EOWNERDEAD           130   /* Owner died */
 #define ENOTRECOVERABLE      131   /* State not recoverable */
 #define ERFKILL              132   /* Operation not possible due to RF-kill */
-#define EHWPOISON            133   /* Memory page has hardware error */
-#define UNKNOWN              134   /* Unknown error 134 */
 #endif /* __linux__ */
 
 #ifdef __APPLE__ /* XNU-specific error codes */
+
+#define S21_ERRlIST_LEN 106
 
 #define ENXIO                6     /* Device not configured */
 #define EDEADLK              11    /* Resource deadlock avoided */
