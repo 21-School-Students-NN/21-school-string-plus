@@ -523,6 +523,10 @@ _S(ENOTRECOVERABLE, "State not recoverable")
 _S(ERFKILL, "Operation not possible due to RF-kill")
 #endif
 
+#ifdef EHWPOISON
+_S(EHWPOISON, "Memory page has hardware error")
+#endif
+
 #endif /* __linux__ */
 #ifdef __APPLE__ /* XNU-specific error messages */
 #ifdef ENXIO
@@ -835,6 +839,18 @@ _S(EOWNERDEAD, "Previous owner died")
 
 #ifdef ELAST
 _S(ELAST, "Must be equal largest errno")
+#endif
+
+#ifdef EQFULL
+_S(EQFULL, "Interface output queue is full")
+#endif
+
+#ifdef EWOULDBLOCK
+_S(EWOULDBLOCK, "Operation would block")
+#endif
+
+#ifdef EOPNOTSUPP
+_S(EOPNOTSUPP, "Operation not supported on socket")
 #endif
 
 #endif /* __APPLE__ */

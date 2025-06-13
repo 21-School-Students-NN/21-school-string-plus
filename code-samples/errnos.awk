@@ -4,12 +4,11 @@ BEGIN {
     # Initialize arrays to store error codes
     linux_const[0] = ""
     linux_desc[0] = ""
-    linux_count = 1
+    linux_count = 0
     
-    # TODO: restore the dictionary string = string. we miss some unique codes in XNU
     xnu_const[0] = ""
     xnu_desc[0] = ""
-    xnu_count = 1
+    xnu_count = 0
 }
 
 # Process Linux error codes
@@ -29,7 +28,7 @@ FILENAME == "headers/errno-linux.h" {
         
         linux_const[value] = name
         linux_desc[value] = desc
-        linux_count++
+        linux_count += value - linux_count
     }
 }
 
@@ -62,7 +61,7 @@ END {
     
     # Print common error codes
     print "/* Common error codes */"
-    for (i = 0; i < linux_count; i++) {
+    for (i = 0; i <= linux_count; i++) {
         ln = linux_const[i]
         xn = xnu_const[i]
         if (ln != "" && linux_desc[i] == xnu_desc[i] && ln == xn) {
@@ -70,14 +69,11 @@ END {
                    ln, i, linux_desc[i]
         }
     }
-    print ""
     
     # Print Linux-specific error codes
     print "#ifdef __linux__ /* Linux-specific error codes */"
     print ""
-    print "#define S21_ERRlIST_LEN 134"
-    print ""
-    for (i = 0; i < linux_count; i++) {
+    for (i = 0; i <= linux_count; i++) {
         ln = linux_const[i]
         xn = xnu_const[i]
         if (ln != "" && (linux_desc[i] != xnu_desc[i] || ln != xn)) {
@@ -85,15 +81,18 @@ END {
                    ln, i, linux_desc[i]
         }
     }
+    print ""
+    printf "#define S21_ERRLIST_LEN %d", linux_count
+    print ""
     print "#endif /* __linux__ */"
     print ""
     
     # Print XNU-specific error codes
     print "#ifdef __APPLE__ /* XNU-specific error codes */"
     print ""
-    print "#define S21_ERRlIST_LEN 106"
+    printf "#define S21_ERRLIST_LEN %d", xnu_count
     print ""
-    for (i = 0; i < xnu_count; i++) {
+    for (i = 0; i <= xnu_count; i++) {
         xn = xnu_const[i]
         ln = linux_const[i]
         if (xn != "" && (linux_desc[i] != xnu_desc[i] || xn != ln)) {
@@ -101,6 +100,12 @@ END {
                    xn, i, xnu_desc[i]
         }
     }
+    printf "#define %-20s %-5s /* %s */\n", "EQFULL", 106, "Interface output queue is full"
+    printf "#define %-20s %-5s /* %s */\n", "EWOULDBLOCK", "EAGAIN", "Operation would block"
+    printf "#define %-20s %-5s /* %s */\n", "EOPNOTSUPP", "ENOTSUP" , "Operation not supported on socket"
+    print ""
+    printf "#define S21_ERRLIST_LEN %d", xnu_count
+    print ""
     print "#endif /* __APPLE__ */"
     print ""
     

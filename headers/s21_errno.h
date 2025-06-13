@@ -30,10 +30,7 @@
 #define EMLINK               31    /* Too many links */
 #define EPIPE                32    /* Broken pipe */
 #define EDOM                 33    /* Numerical argument out of domain */
-
 #ifdef __linux__ /* Linux-specific error codes */
-
-#define S21_ERRlIST_LEN 134
 
 #define ENXIO                6     /* No such device or address */
 #define EAGAIN               11    /* Resource temporarily unavailable */
@@ -137,12 +134,14 @@
 #define EOWNERDEAD           130   /* Owner died */
 #define ENOTRECOVERABLE      131   /* State not recoverable */
 #define ERFKILL              132   /* Operation not possible due to RF-kill */
+#define EHWPOISON            133   /* Memory page has hardware error */
+
+#define S21_ERRLIST_LEN 133
 #endif /* __linux__ */
 
 #ifdef __APPLE__ /* XNU-specific error codes */
 
-#define S21_ERRlIST_LEN 106
-
+#define S21_ERRLIST_LEN 109
 #define ENXIO                6     /* Device not configured */
 #define EDEADLK              11    /* Resource deadlock avoided */
 #define EBUSY                16    /* Device / Resource busy */
@@ -221,6 +220,11 @@
 #define ENOTRECOVERABLE      104   /* State not recoverable */
 #define EOWNERDEAD           105   /* Previous owner died */
 #define ELAST                106   /* Must be equal largest errno */
+#define EQFULL               106   /* Interface output queue is full */
+#define EWOULDBLOCK          EAGAIN /* Operation would block */
+#define EOPNOTSUPP           ENOTSUP /* Operation not supported on socket */
+
+#define S21_ERRLIST_LEN 109
 #endif /* __APPLE__ */
 
 #endif /* _SYS_ERRNO_H_ */
