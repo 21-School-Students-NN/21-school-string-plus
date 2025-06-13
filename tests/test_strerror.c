@@ -1,14 +1,13 @@
-#include <check.h>
 #include <errno.h>
 #include <string.h>
 #include <stdlib.h>
 
 #include "../headers/s21_string.h"
 #include "../headers/s21_errno.h"
+#include "./suites.h"
 
 
 START_TEST(test_strerror_known_errors) {
-    // Проверяем известные коды ошибок
     ck_assert_str_eq(s21_strerror(0), strerror(0));
     ck_assert_str_eq(s21_strerror(1), strerror(1));
     ck_assert_str_eq(s21_strerror(2), strerror(2));
@@ -18,16 +17,14 @@ START_TEST(test_strerror_known_errors) {
 END_TEST
 
 START_TEST(test_strerror_unknown_errors) {
-    // Проверяем неизвестные коды ошибок (отрицательные и большие значения)
     ck_assert_str_eq(s21_strerror(-1), strerror(-1));
     ck_assert_str_eq(s21_strerror(9999), strerror(9999));
-    ck_assert_str_eq(s21_strerror(S21_ERRlIST_LEN + 1), strerror(S21_ERRlIST_LEN + 1));
+    ck_assert_str_eq(s21_strerror(S21_ERRLIST_LEN + 1), strerror(S21_ERRLIST_LEN + 1));
 }
 END_TEST
 
 START_TEST(test_strerror_integration) {
-    // Проверяем все известные ошибки в цикле
-    for (int err = 0; err < S21_ERRlIST_LEN; err++) {
+    for (int err = -200; err < 200; err++) {
         const char *sys_str = strerror(err);
         const char *our_str = s21_strerror(err);
         ck_assert_msg(strcmp(sys_str, our_str) == 0,
@@ -36,7 +33,7 @@ START_TEST(test_strerror_integration) {
 }
 END_TEST
 
-Suite *strerror_suite(void) {
+Suite *s21_strerror_suite(void) {
     Suite *s;
     TCase *tc_core;
 
