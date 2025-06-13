@@ -2,6 +2,8 @@
 #include "../headers/s21_string.h"
 
 #include <string.h>
+// TODO: remove <stdio> including.
+#include <stdio.h>
 
 /**
  * @brief get error message string
@@ -19,9 +21,13 @@ char *s21_strerror(int errnum) {
 #undef _S
   };
 
-  if (errnum >= 0 && errnum < S21_ERRlIST_LEN && errlist[errnum] != S21_NULL)
+  static char errmes[64] = {0};
+
+  if (errnum >= 0 && errnum <= S21_ERRLIST_LEN && errlist[errnum] != S21_NULL)
     return (char *)errlist[errnum];
-  else
-    return (char *)"Unknown error ";  // TODO: add to the returned message value
-                                      // of errnum
+  else {
+    // TODO: change `sprintf` to `s21_sprintf`
+    sprintf(errmes, "Unknown error %d", errnum);
+  }
+  return errmes;
 }
