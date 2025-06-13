@@ -34,17 +34,24 @@ all: style-format style-check $(LIBRARY) memory-check
 
 $(LIBRARY): $(LIB_OBJECTS)
 	$(info Assembling all together to static lib...)
-	ar rcs ../$@ $^
-	ranlib ../$@
+	@ar rcs ../$@ $^
+	@ranlib ../$@
 
 $(OBJ_BUILD_DIR)/%.o: $(LIB_SOURCE_DIR)/%.c | $(OBJ_BUILD_DIR)
 	$(info Building the $@ object file...)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 test: clean $(TST_OBJECTS) $(LIBRARY)
-	$(info Assembling and running tests...)
-	$(CC) $(CFLAGS) $(TST_FLAG) $(TST_OBJECTS) ../$(LIBRARY) -o ../$@
-	../$@
+	$(info Assembling tests...)
+	@$(CC) $(CFLAGS) $(TST_FLAG) $(TST_OBJECTS) ../$(LIBRARY) -o ../$@
+	$(info Runing tests with valgrind...)
+	@CK_FORK=no valgrind --tool=memcheck --leak-check=full ../$@ 2>>../test.log
+
+%.test: clean $(TST_OBJECTS) $(LIBRARY)
+	$(info Assembling tests...)
+	@$(CC) $(CFLAGS) $(TST_FLAG) $(TST_OBJECTS) ../$(LIBRARY) -o ../$@
+	$(info Runing $*-test with valgrind...)
+	@CK_RUN_SUITE="$*" CK_FORK=no valgrind --tool=memcheck --leak-check=full ../$@ 2>>../$*.log
 
 $(TST_BUILD_DIR)/%.o: $(TST_SOURCE_DIR)/%.c | $(TST_BUILD_DIR)
 	$(info Building the $@ object file...)

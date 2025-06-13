@@ -38,7 +38,6 @@
 #define ENOSYS 38 /* Function not implemented */
 #define ENOTEMPTY 39 /* Directory not empty */
 #define ELOOP 40 /* Too many levels of symbolic links */
-// #define UNKNOWN 41 /* Unknown error 41 */
 #define ENOMSG 42 /* No message of desired type */
 #define EIDRM 43 /* Identifier removed */
 #define ECHRNG 44 /* Channel number out of range */
@@ -55,7 +54,6 @@
 #define ENOANO 55 /* No anode */
 #define EBADRQC 56 /* Invalid request code */
 #define EBADSLT 57 /* Invalid slot */
-// #define UNKNOWN 58 /* Unknown error 58 */
 #define EBFONT 59 /* Bad font file format */
 #define ENOSTR 60 /* Device not a stream */
 #define ENODATA 61 /* No data available */
@@ -131,4 +129,3 @@
 #define ENOTRECOVERABLE 131 /* State not recoverable */
 #define ERFKILL 132 /* Operation not possible due to RF-kill */
 #define EHWPOISON 133 /* Memory page has hardware error */
-#define UNKNOWN 134 /* Unknown error 134 */
