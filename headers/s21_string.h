@@ -17,16 +17,23 @@ typedef unsigned long s21_size_t;
 #define S21_NULL ((void *)0)
 
 /** @brief Just an example function which prints "Hello, world!"
- @author Evgeniy Parfenyuk (Parthen/rhydonte)
- @date June 4, 2025
- @version 1.0
- @return void
- @note Notice how this comment made - you should also do it for yours func's.
+ * @author Evgeniy Parfenyuk (Parthen/rhydonte)
+ * @date June 4, 2025
+ * @version 1.0
+ * @return void
+ * @note Notice how this comment made - you should also do it for yours func's.
 */
 void s21_example_func(void);
 void *s21_memchr(const void *str, int c, s21_size_t n);
 int s21_memcmp(const void *str1, const void *str2, s21_size_t n);
 void *s21_memcpy(void *dest, const void *src, s21_size_t n);
+/** @brief Fill memory with a constant byte
+ * @author Evgeniy Parfenyuk (Parthen/rhydonte)
+ * @date June 16, 2025
+ * @version 1.0
+ * @return void *
+ * @note Actually, it returns *dest
+*/
 void *s21_memset(void *str, int c, s21_size_t n);
 char *s21_strncat(char *dest, const char *src, s21_size_t n);
 char *s21_strchr(const char *str, int c);
