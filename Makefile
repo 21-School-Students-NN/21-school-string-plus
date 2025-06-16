@@ -82,23 +82,24 @@ $(OBJ_BUILD_DIR)/%.o: $(LIB_SOURCE_DIR)/%.c | $(OBJ_BUILD_DIR)
 # =============================================================================
 test: clean $(TST_OBJECTS) $(LIBRARY)
 	$(info Assembling tests...)
-	@$(CC) $(CFLAGS) $(TST_FLAG) $(TST_OBJECTS) ../$(LIBRARY) -o ../$@
+	@$(CC) $(CFLAGS) $(TST_OBJECTS) ../$(LIBRARY) $(TST_FLAG) -o ../$@
 	$(info Runing tests with valgrind...)
-	@CK_FORK=no valgrind --tool=memcheck --leak-check=full ../$@ 2>>../test.log
+	@CK_FORK=no valgrind --tool=memcheck --leak-check=full ../$@
 
 %.test: clean $(TST_OBJECTS) $(LIBRARY)
 	$(info Assembling tests...)
-	@$(CC) $(CFLAGS) $(TST_FLAG) $(TST_OBJECTS) ../$(LIBRARY) -o ../$@
+	@$(CC) $(CFLAGS) $(TST_OBJECTS) ../$(LIBRARY) $(TST_FLAG) -o ../$@
 	$(info Runing $*-test with valgrind...)
-	@CK_RUN_SUITE="$*" CK_FORK=no valgrind --tool=memcheck --leak-check=full ../$@ 2>>../$*.log
+	@CK_RUN_SUITE="$*" CK_FORK=no valgrind --tool=memcheck --leak-check=full ../$@
 
 $(TST_BUILD_DIR)/%.o: $(TST_SOURCE_DIR)/%.c | $(TST_BUILD_DIR)
 	$(info Building the $@ object file...)
-	@$(CC) $(CFLAGS) $(TST_FLAG) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< $(TST_FLAG) -o $@
 
-gcov_report: clean | $(COV_FRONT_DIR)
+gcov_report: clean
 	$(info Generating coverage report...)
 	@COVERAGE=1 $(MAKE) test
+	@$(MAKE) $(COV_FRONT_DIR)
 	@lcov --test-name "s21_string" --output-file $(COV_REPORT_DIR)/coverage.info --capture --directory $(OBJ_BUILD_DIR)
 	@genhtml $(COV_REPORT_DIR)/coverage.info --dark-mode --output-directory $(COV_FRONT_DIR)
 	@$(OPENCMD) $(COV_FRONT_DIR)/index.html || true
@@ -112,7 +113,7 @@ clean:
 # =============================================================================
 style-format: $(LIB_SOURCE) $(TST_SOURCE)
 	$(info Formatting code with clang-format...)
-	@clang-format -i --style="{BasedOnStyle: Google}" $(LIB_SOURCE) $(TST_SOURCE) code-samples/*.c
+	@clang-format -i --verbose --style="{BasedOnStyle: Google}" $(LIB_SOURCE) $(TST_SOURCE)
 
 style-check: $(LIB_SOURCE) $(TST_SOURCE)
 	$(info Checking style with clang-format...)
@@ -130,7 +131,8 @@ release: clean
 gdb: clean
 	$(info Building debug version...)
 	@DEBUG=1 $(MAKE) test
-	@gdb ../test
+	$(info Running...)
+	@CK_FORK=no gdb ../test
 
 rebuild: clean all
 

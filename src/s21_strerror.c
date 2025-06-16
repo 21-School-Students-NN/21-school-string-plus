@@ -1,7 +1,7 @@
+#include <string.h>
+
 #include "../headers/s21_errno.h"
 #include "../headers/s21_string.h"
-
-#include <string.h>
 // TODO: remove <stdio> including.
 #include <stdio.h>
 
