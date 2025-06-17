@@ -5,15 +5,6 @@
 // TODO: remove <stdio> including.
 #include <stdio.h>
 
-/**
- * @brief get error message string
- * @return a pointer to a string that describes the error code passed in  the
- * argument  errnum
- *
- * @version 1.0
- * @date June 6, 2025
- * @author Demian Domozhirov (DarkDomian/trelawnm)
- */
 char *s21_strerror(int errnum) {
   const char *const errlist[] = {
 #define _S(n, str) [n] = str,

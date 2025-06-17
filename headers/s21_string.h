@@ -40,6 +40,16 @@ char *s21_strchr(const char *str, int c);
 int s21_strncmp(const char *str1, const char *str2, s21_size_t n);
 char *s21_strncpy(char *dest, const char *src, s21_size_t n);
 char *s21_strncpy(char *dest, const char *src, s21_size_t n);
+
+/**
+ * @brief get error message string
+ * @return a pointer to a string that describes the error code passed in  the
+ * argument  errnum
+ *
+ * @version 1.0
+ * @date June 6, 2025
+ * @author Demian Domozhirov (DarkDomian/trelawnm)
+ */
 char *s21_strerror(int errnum);
 s21_size_t s21_strlen(const char *str);
 char *s21_strpbrk(const char *str1, const char *str2);
