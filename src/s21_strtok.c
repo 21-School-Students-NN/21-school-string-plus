@@ -1,3 +1,4 @@
+// TODO: remove <string.h> call from file
 #include <string.h>
 
 #include "../headers/s21_string.h"
@@ -23,39 +24,6 @@ static s21_size_t s21_strspn(const char *s, const char *accept) {
   return count;
 }
 
-/* Find the first occurrence in S of any character in ACCEPT.  */
-#if 0
-static char *s21_strpbrk(const char *s, const char *accept) {
-  while (*s != '\0') {
-    const char *a = accept;
-    while (*a != '\0')
-      if (*a++ == *s) return (char *)s;
-    ++s;
-  }
-
-  return S21_NULL;
-}
-#endif
-
-#if 0
-static char *s21_strpbrk(const char *s1, const char *s2) {
-  const char *c = s2;
-  if (!*s1) return (char *)S21_NULL;
-
-  while (*s1) {
-    for (c = s2; *c; c++) {
-      if (*s1 == *c) break;
-    }
-    if (*c) break;
-    s1++;
-  }
-
-  if (*c == '\0') s1 = S21_NULL;
-
-  return (char *)s1;
-}
-#endif
-
 /* Parse S into tokens separated by characters in DELIM.
    If S is NULL, the last string strtok() was called with is
    used.  For example:
@@ -65,6 +33,9 @@ static char *s21_strpbrk(const char *s1, const char *s2) {
         x = strtok(NULL, "=");		// x = NULL
                 // s = "abc\0=-def\0"
 */
+
+// TODO: add `s21_` prefix to `strpbrk` when it will be done
+
 char *s21_strtok(char *str, const char *delim) {
   char *token;
 
