@@ -7,9 +7,10 @@
 
 int main(void) {
   int number_failed;
-  Suite *s = s21_strerror_suite();
+  Suite *s = s21_strchr_suite();
   SRunner *sr = srunner_create(s);
 
+  srunner_add_suite(sr, s21_strchr_suite());
   // Check for CK_RUN_SUITE and set a custom log file
   const char *suite = getenv("CK_RUN_SUITE");
   if (suite && strlen(suite) > 0) {
