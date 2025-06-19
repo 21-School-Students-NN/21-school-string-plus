@@ -41,9 +41,18 @@ char *s21_strncpy(char *dest, const char *src, s21_size_t n);
  *
  * @version 1.0
  * @date June 6, 2025
- * @author Demian Domozhirov (DarkDomian/trelawnm)
+ * @author Demian Domozhirov (DarkDomian | trelawnm at 21 School)
  */
 char *s21_strerror(int errnum);
+
+/**
+ * @brief calculate the length of a string
+ * @return the `s21_strlen()` function returns the number of bytes in the string pointed to by `str`.
+ * 
+ * @version 0.8
+ * @date June 19, 2025
+ * @author Demian Domozhirov (DarkDomian | trelawnm at 21 School)
+ */
 s21_size_t s21_strlen(const char *str);
 char *s21_strpbrk(const char *str1, const char *str2);
 char *s21_strrchr(const char *str, int c);
