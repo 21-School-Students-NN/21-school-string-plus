@@ -17,7 +17,8 @@ START_TEST(test_strncat_normal) {
   const char *src = " World";
   size_t n = 3;
 
-  ck_assert_str_eq(s21_strncat(dest_school, src, n), strncat(dest_original, src, n));
+  ck_assert_str_eq(s21_strncat(dest_school, src, n),
+                   strncat(dest_original, src, n));
 }
 END_TEST
 
@@ -29,7 +30,8 @@ START_TEST(test_strncat_n_zero) {
   const char *src = " World";
   size_t n = 0;
 
-  ck_assert_str_eq(s21_strncat(dest_school, src, n), strncat(dest_original, src, n));
+  ck_assert_str_eq(s21_strncat(dest_school, src, n),
+                   strncat(dest_original, src, n));
 }
 END_TEST
 
@@ -41,20 +43,8 @@ START_TEST(test_strncat_src_shorter_than_n) {
   const char *src = "A";
   size_t n = 5;
 
-  ck_assert_str_eq(s21_strncat(dest_school, src, n), strncat(dest_original, src, n));
-}
-END_TEST
-
-
-// Edge case: dest buffer overflow prevention
-START_TEST(test_strncat_buffer_overflow) {
-  char dest_original[STRING_SIZE] = "Hello";
-  char dest_school[STRING_SIZE] = "Hello";
-
-  const char *src = " World";
-  size_t n = 6;  // Would overflow if not properly handled
-
-  ck_assert_str_eq(s21_strncat(dest_school, src, n), strncat(dest_original, src, n));
+  ck_assert_str_eq(s21_strncat(dest_school, src, n),
+                   strncat(dest_original, src, n));
 }
 END_TEST
 
@@ -66,7 +56,8 @@ START_TEST(test_strncat_full_append) {
   const char *src = " World";
   size_t n = 6;
 
-  ck_assert_str_eq(s21_strncat(dest_school, src, n), strncat(dest_original, src, n));
+  ck_assert_str_eq(s21_strncat(dest_school, src, n),
+                   strncat(dest_original, src, n));
 }
 END_TEST
 
@@ -78,19 +69,35 @@ START_TEST(test_strncat_empty_src) {
   const char *src = "";
   size_t n = 3;
 
-  ck_assert_str_eq(s21_strncat(dest_school, src, n), strncat(dest_original, src, n));
+  ck_assert_str_eq(s21_strncat(dest_school, src, n),
+                   strncat(dest_original, src, n));
 }
 END_TEST
 
 // Edge case: empty dest
 START_TEST(test_strncat_empty_dest) {
-  char dest_original[STRING_SIZE] = "";
-  char dest_school[STRING_SIZE] = "";
+  char dest_original[STRING_SIZE] = "\0 World";
+  char dest_school[STRING_SIZE] = "\0 World";
 
   const char *src = "Hello";
   size_t n = 5;
 
-  ck_assert_str_eq(s21_strncat(dest_school, src, n), strncat(dest_original, src, n));
+  ck_assert_str_eq(s21_strncat(dest_school, src, n),
+                   strncat(dest_original, src, n));
+}
+END_TEST
+
+START_TEST(test_strncat_from_int_to_string) {
+  int dest_original[STRING_SIZE] = {66, 100, 49, 50, 0,  38, 100, 0,
+                                    0,  111, 15, 71, 66, 80, 14,  0};
+  int dest_school[STRING_SIZE] = {66, 100, 49, 50, 0,  38, 100, 0,
+                                  0,  111, 15, 71, 66, 80, 14,  0};
+
+  const char *src = "Hello";
+  size_t n = 5;
+
+  ck_assert_str_eq(s21_strncat((char *)dest_school, src, n),
+                   strncat((char *)dest_original, src, n));
 }
 END_TEST
 
@@ -104,10 +111,10 @@ Suite *s21_strncat_suite(void) {
   tcase_add_test(tc_core, test_strncat_normal);
   tcase_add_test(tc_core, test_strncat_n_zero);
   tcase_add_test(tc_core, test_strncat_src_shorter_than_n);
-  tcase_add_test(tc_core, test_strncat_buffer_overflow);
   tcase_add_test(tc_core, test_strncat_full_append);
   tcase_add_test(tc_core, test_strncat_empty_src);
   tcase_add_test(tc_core, test_strncat_empty_dest);
+  tcase_add_test(tc_core, test_strncat_from_int_to_string);
 
   suite_add_tcase(s, tc_core);
 
