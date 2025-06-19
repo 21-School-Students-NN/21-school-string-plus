@@ -48,6 +48,15 @@ s21_size_t s21_strlen(const char *str);
 char *s21_strpbrk(const char *str1, const char *str2);
 char *s21_strrchr(const char *str, int c);
 char *s21_strstr(const char *haystack, const char *needle);
+
+/**
+ * @brief extract tokens from strings
+ * @return The `s21_strtok()` function return a pointer to the next token, or `S21_NULL` if there are no more tokens.
+ *
+ * @version 8.0
+ * @date June 19, 2025
+ * @author Demian Domozhirov (DarkDomian | trelawnm at 21 School)
+ */
 char *s21_strtok(char *str, const char *delim);
 
 #endif
