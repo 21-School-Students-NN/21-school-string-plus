@@ -15,7 +15,7 @@
 
 // Test 1: Basic tokenization with space delimiter
 START_TEST(test_strtok_space_delim) {
-  char buffer1[ALICE_SIZE], buffer2[ALICE_SIZE];
+  char buffer1[ALICE_SIZE] = {0}, buffer2[ALICE_SIZE] = {0};
   strcpy(buffer1, ALICE_TEXT);
   strcpy(buffer2, ALICE_TEXT);
 
@@ -27,7 +27,7 @@ START_TEST(test_strtok_space_delim) {
     ck_assert_mem_eq(buffer1, buffer2, ALICE_SIZE);
 
     token1 = strtok(NULL, " ");
-    token2 = s21_strtok(NULL, " ");
+    token2 = s21_strtok(S21_NULL, " ");
   }
 
   // Verify both return NULL at the end
@@ -38,7 +38,7 @@ END_TEST
 
 // Test 2: Comma and punctuation delimiters
 START_TEST(test_strtok_comma_delim) {
-  char buffer1[ALICE_SIZE], buffer2[ALICE_SIZE];
+  char buffer1[ALICE_SIZE] = {0}, buffer2[ALICE_SIZE] = {0};
   strcpy(buffer1, ALICE_TEXT);
   strcpy(buffer2, ALICE_TEXT);
 
@@ -50,14 +50,14 @@ START_TEST(test_strtok_comma_delim) {
     ck_assert_mem_eq(buffer1, buffer2, ALICE_SIZE);
 
     token1 = strtok(NULL, ",:”");
-    token2 = s21_strtok(NULL, ",:”");
+    token2 = s21_strtok(S21_NULL, ",:”");
   }
 }
 END_TEST
 
 // Test 3: Mixed delimiters with NULL calls
 START_TEST(test_strtok_mixed_delims_with_null) {
-  char buffer1[ALICE_SIZE], buffer2[ALICE_SIZE];
+  char buffer1[ALICE_SIZE] = {0}, buffer2[ALICE_SIZE] = {0};
   strcpy(buffer1, ALICE_TEXT);
   strcpy(buffer2, ALICE_TEXT);
 
@@ -73,7 +73,7 @@ START_TEST(test_strtok_mixed_delims_with_null) {
     // Every 3rd call, change delimiters
     const char *current_delims = ((iteration++) % 3 == 0) ? "h" : delims;
     token1 = strtok(NULL, current_delims);
-    token2 = s21_strtok(NULL, current_delims);
+    token2 = s21_strtok(S21_NULL, current_delims);
   }
 }
 END_TEST
@@ -81,7 +81,7 @@ END_TEST
 // Test 4: Edge case - empty string
 START_TEST(test_strtok_empty_string) {
   const char empty_str[] = "";
-  char buffer1[ALICE_SIZE], buffer2[ALICE_SIZE];
+  char buffer1[ALICE_SIZE] = {0}, buffer2[ALICE_SIZE] = {0};
   strcpy(buffer1, empty_str);
   strcpy(buffer2, empty_str);
 
@@ -97,7 +97,7 @@ END_TEST
 // Test 5: No delimiters found
 START_TEST(test_strtok_no_delims) {
   const char no_delims[] = "ThisStringHasNoDelimiters";
-  char buffer1[64], buffer2[64];
+  char buffer1[64] = {0}, buffer2[64] = {0};
   strcpy(buffer1, no_delims);
   strcpy(buffer2, no_delims);
 
@@ -108,7 +108,7 @@ START_TEST(test_strtok_no_delims) {
   ck_assert_mem_eq(buffer1, buffer2, strlen(no_delims) + 1);
 
   token1 = strtok(NULL, " ,.");
-  token2 = s21_strtok(NULL, " ,.");
+  token2 = s21_strtok(S21_NULL, " ,.");
   ck_assert_ptr_null(token1);
   ck_assert_ptr_null(token2);
 }
