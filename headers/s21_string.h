@@ -33,7 +33,6 @@ char *s21_strchr(const char *str, int c);
 int s21_strncmp(const char *str1, const char *str2, s21_size_t n);
 char *s21_strncpy(char *dest, const char *src, s21_size_t n);
 char *s21_strncpy(char *dest, const char *src, s21_size_t n);
-
 /**
  * @brief get error message string
  * @return a pointer to a string that describes the error code passed in  the
@@ -47,6 +46,14 @@ char *s21_strerror(int errnum);
 s21_size_t s21_strlen(const char *str);
 char *s21_strpbrk(const char *str1, const char *str2);
 char *s21_strrchr(const char *str, int c);
+/**
+ * @brief locate a substring
+ * @return These functions return a pointer to the beginning of the located substring, or `S21_NULL` if the substring is not found.
+ *
+ * @version 1.0
+ * @date June 20, 2025
+ * @author Mark Mindrin (@GOOD3113)
+ */
 char *s21_strstr(const char *haystack, const char *needle);
 char *s21_strtok(char *str, const char *delim);
 
