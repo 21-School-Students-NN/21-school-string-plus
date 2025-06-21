@@ -35,7 +35,8 @@ char *s21_strncat(char *dest, const char *src, s21_size_t n);
  * @author Evgeniy Parfenyuk (Parthen/rhydonte)
  * @date June 19, 2025
  * @version 1.0
- * @return char * 
+ * @return the `s21_strchr()` function return a pointer to the matched character
+ *   or S21_NULL if the character is not found.
  */
 char *s21_strchr(const char *str, int c);
 int s21_strncmp(const char *str1, const char *str2, s21_size_t n);

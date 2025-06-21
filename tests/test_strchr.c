@@ -47,6 +47,14 @@ START_TEST(test_strchr_search_null) {
 }
 END_TEST
 
+START_TEST(test_strchr_search_eof) {
+  const char *str = "I'm a little Bee and my name is Vitalya";
+  int c = -1;  // EOF
+  ck_assert_ptr_eq(s21_strchr(str, c),
+                   strchr(str, c));  // Compare pointers (both NULL)
+}
+END_TEST
+
 Suite *s21_strchr_suite(void) {
   Suite *s;
   TCase *tc_core;
@@ -58,6 +66,7 @@ Suite *s21_strchr_suite(void) {
   tcase_add_test(tc_core, test_strchr_zero_occasions);
   tcase_add_test(tc_core, test_strchr_empty_string);
   tcase_add_test(tc_core, test_strchr_search_null);
+  tcase_add_test(tc_core, test_strchr_search_eof);
 
   suite_add_tcase(s, tc_core);
 
