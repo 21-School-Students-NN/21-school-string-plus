@@ -26,6 +26,17 @@ typedef unsigned long s21_size_t;
 void s21_example_func(void);
 void *s21_memchr(const void *str, int c, s21_size_t n);
 int s21_memcmp(const void *str1, const void *str2, s21_size_t n);
+
+/** @brief copies n bytes from memory area src to memory area dest
+ * @author Anton Gashturi (Parthen/rhydonte)
+ * @date June 22, 2025
+ * @param dest pointer to destination area
+ * @param src pointer to source area
+ * @param n number of bytes to copy
+ * @version 1.0
+ * @return void* a pointer to `dest`
+ * @note Notice how this comment made - you should also do it for yours func's.
+ */
 void *s21_memcpy(void *dest, const void *src, s21_size_t n);
 void *s21_memset(void *str, int c, s21_size_t n);
 char *s21_strncat(char *dest, const char *src, s21_size_t n);
