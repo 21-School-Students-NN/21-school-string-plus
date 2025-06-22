@@ -49,9 +49,8 @@ END_TEST
 
 START_TEST(test_strchr_search_eof) {
   const char *str = "I'm a little Bee and my name is Vitalya";
-  int c = -1;  // EOF
-  ck_assert_ptr_eq(s21_strchr(str, c),
-                   strchr(str, c));  // Compare pointers (both NULL)
+  ck_assert_ptr_eq(s21_strchr(str, EOF),
+                   strchr(str, EOF));  // Compare pointers (both NULL)
 }
 END_TEST
 
