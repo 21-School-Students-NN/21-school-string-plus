@@ -4,6 +4,7 @@
 #include <check.h>
 
 Suite *s21_strerror_suite(void);
+Suite *s21_strncat_suite(void);
 Suite *s21_strtok_suite(void);
 Suite *s21_strchr_suite(void);
 

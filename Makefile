@@ -80,17 +80,17 @@ $(OBJ_BUILD_DIR)/%.o: $(LIB_SOURCE_DIR)/%.c | $(OBJ_BUILD_DIR)
 # =============================================================================
 # Testing Rules
 # =============================================================================
-test: clean $(TST_OBJECTS) $(LIBRARY)
+test: clean style-check $(TST_OBJECTS) $(LIBRARY)
 	$(info Assembling tests...)
 	@$(CC) $(CFLAGS) $(TST_OBJECTS) ../$(LIBRARY) $(TST_FLAG) -o ../$@
 	$(info Runing tests with valgrind...)
-	@CK_FORK=no valgrind --tool=memcheck --leak-check=full ../$@
+	@CK_FORK=no valgrind --tool=memcheck --leak-check=full --track-origins=yes ../$@
 
-%.test: clean $(TST_OBJECTS) $(LIBRARY)
+%.test: clean style-check $(TST_OBJECTS) $(LIBRARY)
 	$(info Assembling tests...)
 	@$(CC) $(CFLAGS) $(TST_OBJECTS) ../$(LIBRARY) $(TST_FLAG) -o ../$@
 	$(info Runing $*-test with valgrind...)
-	@CK_RUN_SUITE="$*" CK_FORK=no valgrind --tool=memcheck --leak-check=full ../$@
+	@CK_RUN_SUITE="$*" CK_FORK=no valgrind --tool=memcheck --leak-check=full --track-origins=yes ../$@
 
 $(TST_BUILD_DIR)/%.o: $(TST_SOURCE_DIR)/%.c | $(TST_BUILD_DIR)
 	$(info Building the $@ object file...)
@@ -119,7 +119,7 @@ style-check: $(LIB_SOURCE) $(TST_SOURCE)
 	$(info Checking style with clang-format...)
 	@clang-format -n --style="{BasedOnStyle: Google}" $(LIB_SOURCE) $(TST_SOURCE)
 	$(info Running cppcheck...)
-	@cppcheck --enable=all --suppress=missingIncludeSystem $(LIB_SOURCE) $(TST_SOURCE)
+	@cppcheck --enable=all --force --suppress=missingIncludeSystem $(LIB_SOURCE) $(TST_SOURCE)
 
 # =============================================================================
 # Build Mode Rules

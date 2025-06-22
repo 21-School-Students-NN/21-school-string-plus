@@ -29,6 +29,15 @@ void *s21_memchr(const void *str, int c, s21_size_t n);
 int s21_memcmp(const void *str1, const void *str2, s21_size_t n);
 void *s21_memcpy(void *dest, const void *src, s21_size_t n);
 void *s21_memset(void *str, int c, s21_size_t n);
+
+/**
+ * @brief append non-null bytes from a source array to a string, and null-terminate the result
+ * @return s21_strncat() return dest
+ * 
+ * @version 0.8
+ * @date June 18, 2025
+ * @author Demian Domozhirov (DarkDomian/trelawnm)
+ */
 char *s21_strncat(char *dest, const char *src, s21_size_t n);
 /** 
  * @brief Finds the first occurrence of c in str
