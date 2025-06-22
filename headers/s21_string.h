@@ -30,6 +30,16 @@ void *s21_memcpy(void *dest, const void *src, s21_size_t n);
 void *s21_memset(void *str, int c, s21_size_t n);
 char *s21_strncat(char *dest, const char *src, s21_size_t n);
 char *s21_strchr(const char *str, int c);
+
+/**
+ * @brief compare only the first (at most) `n` bytes of `str1` and `str2`
+ * @return the `s21_strncmp()` function return an integer less than, equal to, or greater than zero if
+ * first n bytes `str1` is found, respectively, to be less than, to match, or be greater than `str2`
+ *
+ * @version 1.0
+ * @date June 21, 2025
+ * @author Demian Domozhirov (DarkDomian | trelawnm at 21 School)
+ */
 int s21_strncmp(const char *str1, const char *str2, s21_size_t n);
 char *s21_strncpy(char *dest, const char *src, s21_size_t n);
 char *s21_strncpy(char *dest, const char *src, s21_size_t n);
