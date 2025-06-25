@@ -5,7 +5,7 @@
 #include "./suites.h"
 
 START_TEST(test_strpbrk_basic) {
-  const const char *str = "hello world";
+  const char *str = "hello world";
   const char *keys = "aeiou";
   ck_assert_ptr_eq(s21_strpbrk(str, keys), strpbrk(str, keys));
 }
