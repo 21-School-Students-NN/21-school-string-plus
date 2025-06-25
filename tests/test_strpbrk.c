@@ -5,32 +5,32 @@
 #include "./suites.h"
 
 START_TEST(test_strpbrk_basic) {
-  char *str = "hello world";
-  char *keys = "aeiou";
+  const const char *str = "hello world";
+  const char *keys = "aeiou";
   ck_assert_ptr_eq(s21_strpbrk(str, keys), strpbrk(str, keys));
 }
 
 START_TEST(test_strpbrk_no_match) {
-  char *str = "xyz";
-  char *keys = "abc";
+  const char *str = "xyz";
+  const char *keys = "abc";
   ck_assert_ptr_eq(s21_strpbrk(str, keys), strpbrk(str, keys));
 }
 
 START_TEST(test_strpbrk_empty_str) {
-  char *str = "";
-  char *keys = "abc";
+  const char *str = "";
+  const char *keys = "abc";
   ck_assert_ptr_eq(s21_strpbrk(str, keys), strpbrk(str, keys));
 }
 
 START_TEST(test_strpbrk_empty_keys) {
-  char *str = "hello";
-  char *keys = "";
+  const char *str = "hello";
+  const char *keys = "";
   ck_assert_ptr_eq(s21_strpbrk(str, keys), strpbrk(str, keys));
 }
 
 START_TEST(test_strpbrk_null_byte) {
-  char *str = "test\0string";
-  char *keys = "\0";
+  const char *str = "test\0string";
+  const char *keys = "\0";
   ck_assert_ptr_eq(s21_strpbrk(str, keys), strpbrk(str, keys));
 }
 
