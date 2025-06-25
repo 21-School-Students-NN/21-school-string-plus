@@ -1,3 +1,2 @@
 # exclude all object files
 build/*
-a.out

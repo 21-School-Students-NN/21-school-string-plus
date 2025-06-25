@@ -16,7 +16,7 @@ typedef unsigned long s21_size_t;
 // Define our own NULL macro
 #define S21_NULL ((void *)0)
 
-/** 
+/**
  * @brief Just an example function which prints "Hello, world!"
  * @author Evgeniy Parfenyuk (Parthen/rhydonte)
  * @date June 4, 2025
@@ -27,6 +27,17 @@ typedef unsigned long s21_size_t;
 void s21_example_func(void);
 void *s21_memchr(const void *str, int c, s21_size_t n);
 int s21_memcmp(const void *str1, const void *str2, s21_size_t n);
+
+/** @brief copies n bytes from memory area src to memory area dest
+ * @author Anton Gashturi (Parthen/rhydonte)
+ * @date June 22, 2025
+ * @param dest pointer to destination area
+ * @param src pointer to source area
+ * @param n number of bytes to copy
+ * @version 1.0
+ * @return a pointer to `dest`
+ * @note Notice how this comment made - you should also do it for yours func's.
+ */
 void *s21_memcpy(void *dest, const void *src, s21_size_t n);
 /** @brief Fill memory with a constant byte
  * @author Evgeniy Parfenyuk (Parthen/rhydonte)
@@ -38,15 +49,16 @@ void *s21_memcpy(void *dest, const void *src, s21_size_t n);
 void *s21_memset(void *str, int c, s21_size_t n);
 
 /**
- * @brief append non-null bytes from a source array to a string, and null-terminate the result
+ * @brief append non-null bytes from a source array to a string, and
+ * null-terminate the result
  * @return s21_strncat() return dest
- * 
+ *
  * @version 0.8
  * @date June 18, 2025
  * @author Demian Domozhirov (DarkDomian/trelawnm)
  */
 char *s21_strncat(char *dest, const char *src, s21_size_t n);
-/** 
+/**
  * @brief Finds the first occurrence of c in str
  * @author Evgeniy Parfenyuk (Parthen/rhydonte)
  * @date June 19, 2025
@@ -95,7 +107,8 @@ char *s21_strstr(const char *haystack, const char *needle);
 
 /**
  * @brief extract tokens from strings
- * @return The `s21_strtok()` function return a pointer to the next token, or `S21_NULL` if there are no more tokens.
+ * @return The `s21_strtok()` function return a pointer to the next token, or
+ * `S21_NULL` if there are no more tokens.
  *
  * @version 8.0
  * @date June 19, 2025
