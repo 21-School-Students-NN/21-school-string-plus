@@ -3,6 +3,7 @@
 
 #include <check.h>
 
+Suite *s21_strcspn_suite(void);
 Suite *s21_strncmp_suite(void);
 Suite *s21_strerror_suite(void);
 Suite *s21_strlen_suite(void);
