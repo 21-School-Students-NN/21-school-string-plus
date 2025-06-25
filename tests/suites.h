@@ -3,7 +3,17 @@
 
 #include <check.h>
 
+<<<<<<< feature/s21_strpbrk
 Suite *s21_strpbrk_suite(void);
+=======
+Suite *s21_strncmp_suite(void);
+>>>>>>> develop
 Suite *s21_strerror_suite(void);
+Suite *s21_strlen_suite(void);
+Suite *s21_memset_suite(void); 
+Suite *s21_memcpy_suite(void);
+Suite *s21_strncat_suite(void);
+Suite *s21_strtok_suite(void);
+Suite *s21_strchr_suite(void);
 
 #endif /* SUITES_H */
