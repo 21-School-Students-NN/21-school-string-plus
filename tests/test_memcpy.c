@@ -28,7 +28,7 @@ END_TEST
 
 // Test function comparing s21_memcpy with memcpy
 START_TEST(test_memcpy_string_comparison) {
-  char src[] = "Hello, world!";
+  char const src[] = "Hello, world!";
   char dest1[50];
   char dest2[50];
 
@@ -45,7 +45,7 @@ END_TEST
 
 // Test copying zero bytes
 START_TEST(test_memcpy_zero_length) {
-  char src[] = "Test";
+  char const src[] = "Test";
   char dest1[10] = {0};
   char dest2[10] = {0};
 
