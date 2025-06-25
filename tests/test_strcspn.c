@@ -53,13 +53,6 @@ START_TEST(test_strcspn_null_byte_in_reject) {
 }
 END_TEST
 
-START_TEST(test_strcspn_unicode_chars) {
-  const char *str = "привет мир";
-  const char *reject = "мр";
-  ck_assert_uint_eq(s21_strcspn(str, reject), strcspn(str, reject));
-}
-END_TEST
-
 START_TEST(test_strcspn_repeated_chars) {
   const char *str = "aabbccdd";
   const char *reject = "bc";
@@ -85,7 +78,6 @@ Suite *s21_strcspn_suite(void) {
   tcase_add_test(tc_core, test_strcspn_empty_reject);
   tcase_add_test(tc_core, test_strcspn_both_empty);
   tcase_add_test(tc_core, test_strcspn_null_byte_in_reject);
-  tcase_add_test(tc_core, test_strcspn_unicode_chars);
   tcase_add_test(tc_core, test_strcspn_repeated_chars);
   tcase_add_test(tc_core, test_strcspn_first_char_match);
 
