@@ -1,12 +1,12 @@
 # =============================================================================
 # Compiler Configuration
 # =============================================================================
-CC				=		gcc
-CFLAGS			=		-Wall -Werror -Wextra -std=c11 -pedantic
-TST_FLAG		:=		$(shell pkg-config --cflags --libs check)
-COV_FLAGS		=		-fprofile-arcs -ftest-coverage
-DBG_FLAGS		=		-g
-REL_FLAG		=		-DNDEBUG -O2
+CC				::=		gcc
+CFLAGS			::=		-Wall -Werror -Wextra -std=c11 -pedantic
+TST_FLAG		::=		$(shell pkg-config --cflags --libs check)
+COV_FLAGS		::=		-fprofile-arcs -ftest-coverage
+DBG_FLAGS		::=		-g
+REL_FLAG		::=		-DNDEBUG -O2
 
 # =============================================================================
 # Build Mode Configuration
@@ -27,24 +27,26 @@ endif
 # Platform-Specific Configuration
 # =============================================================================
 ifeq ($(shell uname),Darwin)
-    OPENCMD = open
+    OPENCMD ::= open
 else
-    OPENCMD = xdg-open
+    OPENCMD ::= xdg-open
 endif
 
 # =============================================================================
 # Directory Structure
 # =============================================================================
-HEADERS			=		./headers
+HEADERS			::=		./headers
 
-LIB_SOURCE_DIR	=		./src
-OBJ_BUILD_DIR	=		./build/obj
+LIB_SOURCE_DIR	::=		./src
+OBJ_BUILD_DIR	::=		./build/obj
 
-TST_SOURCE_DIR	=		./tests
-TST_BUILD_DIR	=		./build/test
+TST_SOURCE_DIR	::=		./tests
+TST_BUILD_DIR	::=		./build/test
 
-COV_REPORT_DIR	=		../coverage
-COV_FRONT_DIR	=		../coverage/web
+COV_REPORT_DIR	::=		../coverage
+COV_FRONT_DIR	::=		../coverage/web
+
+CFLAGS_STAMP	::=		./build/cflags.stamp
 
 # =============================================================================
 # Source and Object Files
@@ -59,21 +61,56 @@ TST_OBJECTS		=		$(patsubst $(TST_SOURCE_DIR)/%.c, $(TST_BUILD_DIR)/%.o, $(TST_SO
 # =============================================================================
 # Main Targets
 # =============================================================================
-LIBRARY			=		s21_string.a
+LIBRARY			::=		s21_string.a
 
-.PHONY: all debug release style-format style-check gcov_report clean rebuild gdb
+.PHONY: all debug release style_format style_check gcov_report clean rebuild gdb help
+
+# =============================================================================
+# Help Target
+# =============================================================================
+help:
+	@printf "TARGETS:\n"
+	@printf "\t%-20s %s\n" "all" "Build and run tests with style check"
+	@printf "\t%-20s %s\n" "test" "Compile and run all tests"
+	@printf "\t%-20s %s\n" "release" "Build optimized release version"
+	@printf "\t%-20s %s\n" "debug" "Build with debug symbols"
+	@printf "\t%-20s %s\n" "gdb" "Build debug version and run with gdb"
+	@printf "\t%-20s %s\n" "style_format" "Format code with clang-format"
+	@printf "\t%-20s %s\n" "style_check" "Check code style and run cppcheck"
+	@printf "\t%-20s %s\n" "gcov_report" "Generate coverage report"
+	@printf "\t%-20s %s\n" "clean" "Remove all build artifacts"
+	@printf "\t%-20s %s\n" "rebuild" "Clean and rebuild everything"
+	@printf "\t%-20s %s\n" "help" "Show this help message"
+	@printf "\n"
+	@printf "ENVIRONMENT VARIABLES:\n"
+	@printf "\t%-20s %s\n" "COVERAGE=1" "Enable coverage instrumentation"
+	@printf "\t%-20s %s\n" "RELEASE=1" "Enable release optimizations"
+	@printf "\t%-20s %s\n" "DEBUG=1" "Enable debug symbols"
+	@printf "\n"
+	@printf "DIRECTORIES:\n"
+	@printf "\t%-20s %s\n" "$(COV_REPORT_DIR)" "directory with coverage info"
+	@printf "\t%-20s %s\n" "$(COV_FRONT_DIR)" "directory with coverage static web-page"
+	@printf "\t%-20s %s\n" "$(OBJ_BUILD_DIR)" "directory with object files"
+	@printf "\t%-20s %s\n" "$(TST_BUILD_DIR)" "directory with test object files"
+	@printf "\t%-20s %s\n" "$(HEADERS)" "directory with header files"
+
+# =============================================================================
+# Stamp For Better Build Proccess
+# =============================================================================
+$(CFLAGS_STAMP): Makefile $(OBJ_BUILD_DIR)
+	@echo '$(CFLAGS)' > $@
 
 # =============================================================================
 # Build Rules
 # =============================================================================
-all: style-check test
+all: style_check test
 
 $(LIBRARY): $(LIB_OBJECTS)
 	$(info Assembling all together to static lib...)
 	@ar rcs ../$@ $^
 	@ranlib ../$@
 
-$(OBJ_BUILD_DIR)/%.o: $(LIB_SOURCE_DIR)/%.c | $(OBJ_BUILD_DIR)
+$(OBJ_BUILD_DIR)/%.o: $(LIB_SOURCE_DIR)/%.c $(CFLAGS_STAMP) | $(OBJ_BUILD_DIR)
 	$(info Building the $@ object file...)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
@@ -83,9 +120,9 @@ $(OBJ_BUILD_DIR)/%.o: $(LIB_SOURCE_DIR)/%.c | $(OBJ_BUILD_DIR)
 test: $(TST_OBJECTS) $(LIBRARY)
 	$(info Assembling tests...)
 	@$(CC) $(CFLAGS) $(TST_OBJECTS) ../$(LIBRARY) $(TST_FLAG) -o ../$@
-	
-# $(info Runing tests with valgrind...)
-# @CK_FORK=no valgrind --tool=memcheck --leak-check=full --track-origins=yes ../$@
+	$(info Runing tests with valgrind...)
+	@CK_FORK=no valgrind --tool=memcheck --leak-check=full --track-origins=yes ../$@
+
 $(TST_BUILD_DIR)/%.o: $(TST_SOURCE_DIR)/%.c | $(TST_BUILD_DIR)
 	$(info Building the $@ object file...)
 	@$(CC) $(CFLAGS) -c $< $(TST_FLAG) -o $@
@@ -97,7 +134,7 @@ $(TST_BUILD_DIR)/%.o: $(TST_SOURCE_DIR)/%.c | $(TST_BUILD_DIR)
 
 gcov_report: $(COV_FRONT_DIR)
 	$(info Generating coverage report...)
-	@COVERAGE=1 $(MAKE) test
+	@COVERAGE=1 $(MAKE) test 1>/dev/null 2>/dev/null
 	@lcov --test-name "s21_string" --output-file $(COV_REPORT_DIR)/coverage.info --capture --directory $(OBJ_BUILD_DIR)
 	@genhtml $(COV_REPORT_DIR)/coverage.info --dark-mode --output-directory $(COV_FRONT_DIR)
 	@$(OPENCMD) $(COV_FRONT_DIR)/index.html || true
@@ -109,11 +146,11 @@ clean:
 # =============================================================================
 # Code Quality Rules
 # =============================================================================
-style-format: $(LIB_SOURCE) $(TST_SOURCE)
+style_format: $(LIB_SOURCE) $(TST_SOURCE)
 	$(info Formatting code with clang-format...)
 	@clang-format -i --verbose --style="{BasedOnStyle: Google}" $(LIB_SOURCE) $(TST_SOURCE)
 
-style-check: $(LIB_SOURCE) $(TST_SOURCE)
+style_check: $(LIB_SOURCE) $(TST_SOURCE)
 	$(info Checking style with clang-format...)
 	@clang-format -n --style="{BasedOnStyle: Google}" $(LIB_SOURCE) $(TST_SOURCE)
 	$(info Running cppcheck...)
