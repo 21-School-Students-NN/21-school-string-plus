@@ -14,6 +14,7 @@ int main(void) {
   srunner_add_suite(sr, s21_strtok_suite());
   srunner_add_suite(sr, s21_strchr_suite());
   srunner_add_suite(sr, s21_strncpy_suite());
+  srunner_add_suite(sr, s21_memcmp_suite());
 
   // Check for CK_RUN_SUITE and set a custom log file
   const char *suite = getenv("CK_RUN_SUITE");
