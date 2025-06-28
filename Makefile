@@ -9,17 +9,18 @@ DBG_FLAGS		::=		-g
 REL_FLAG		::=		-DNDEBUG -O2
 
 # =============================================================================
-# Build Mode Configuration
+# Build Mode Configuration using MAKECMDGOALS
 # =============================================================================
-ifeq ($(COVERAGE),1)
+# Check if any of our special targets are being built
+ifeq ($(filter gcov_report,$(MAKECMDGOALS)),gcov_report)
     CFLAGS += $(COV_FLAGS)
 endif
 
-ifeq ($(RELEASE),1)
+ifeq ($(filter release,$(MAKECMDGOALS)),release)
     CFLAGS += $(REL_FLAG)
 endif
 
-ifeq ($(DEBUG),1)
+ifeq ($(filter gdb,$(MAKECMDGOALS)),debug)
     CFLAGS += $(DBG_FLAGS)
 endif
 
@@ -46,8 +47,6 @@ TST_BUILD_DIR	::=		./build/test
 COV_REPORT_DIR	::=		../coverage
 COV_FRONT_DIR	::=		../coverage/web
 
-CFLAGS_STAMP	::=		./build/cflags.stamp
-
 # =============================================================================
 # Source and Object Files
 # =============================================================================
@@ -73,7 +72,6 @@ help:
 	@printf "\t%-20s %s\n" "all" "Build and run tests with style check"
 	@printf "\t%-20s %s\n" "test" "Compile and run all tests"
 	@printf "\t%-20s %s\n" "release" "Build optimized release version"
-	@printf "\t%-20s %s\n" "debug" "Build with debug symbols"
 	@printf "\t%-20s %s\n" "gdb" "Build debug version and run with gdb"
 	@printf "\t%-20s %s\n" "style_format" "Format code with clang-format"
 	@printf "\t%-20s %s\n" "style_check" "Check code style and run cppcheck"
@@ -82,23 +80,12 @@ help:
 	@printf "\t%-20s %s\n" "rebuild" "Clean and rebuild everything"
 	@printf "\t%-20s %s\n" "help" "Show this help message"
 	@printf "\n"
-	@printf "ENVIRONMENT VARIABLES:\n"
-	@printf "\t%-20s %s\n" "COVERAGE=1" "Enable coverage instrumentation"
-	@printf "\t%-20s %s\n" "RELEASE=1" "Enable release optimizations"
-	@printf "\t%-20s %s\n" "DEBUG=1" "Enable debug symbols"
-	@printf "\n"
 	@printf "DIRECTORIES:\n"
 	@printf "\t%-20s %s\n" "$(COV_REPORT_DIR)" "directory with coverage info"
 	@printf "\t%-20s %s\n" "$(COV_FRONT_DIR)" "directory with coverage static web-page"
 	@printf "\t%-20s %s\n" "$(OBJ_BUILD_DIR)" "directory with object files"
 	@printf "\t%-20s %s\n" "$(TST_BUILD_DIR)" "directory with test object files"
 	@printf "\t%-20s %s\n" "$(HEADERS)" "directory with header files"
-
-# =============================================================================
-# Stamp For Better Build Proccess
-# =============================================================================
-$(CFLAGS_STAMP): Makefile $(OBJ_BUILD_DIR)
-	@echo '$(CFLAGS)' > $@
 
 # =============================================================================
 # Build Rules
@@ -110,7 +97,7 @@ $(LIBRARY): $(LIB_OBJECTS)
 	@ar rcs ../$@ $^
 	@ranlib ../$@
 
-$(OBJ_BUILD_DIR)/%.o: $(LIB_SOURCE_DIR)/%.c $(CFLAGS_STAMP) | $(OBJ_BUILD_DIR)
+$(OBJ_BUILD_DIR)/%.o: $(LIB_SOURCE_DIR)/%.c | $(OBJ_BUILD_DIR)
 	$(info Building the $@ object file...)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
@@ -128,13 +115,12 @@ $(TST_BUILD_DIR)/%.o: $(TST_SOURCE_DIR)/%.c | $(TST_BUILD_DIR)
 	@$(CC) $(CFLAGS) -c $< $(TST_FLAG) -o $@
 
 
-%.test: ../test
+%.test: test
 	$(info Runing $*-test with valgrind...)
 	@CK_RUN_SUITE="$*" CK_FORK=no valgrind --tool=memcheck --leak-check=full --track-origins=yes $^
 
-gcov_report: $(COV_FRONT_DIR)
+gcov_report: $(COV_FRONT_DIR) test
 	$(info Generating coverage report...)
-	@COVERAGE=1 $(MAKE) test 1>/dev/null 2>/dev/null
 	@lcov --test-name "s21_string" --output-file $(COV_REPORT_DIR)/coverage.info --capture --directory $(OBJ_BUILD_DIR)
 	@genhtml $(COV_REPORT_DIR)/coverage.info --dark-mode --output-directory $(COV_FRONT_DIR)
 	@$(OPENCMD) $(COV_FRONT_DIR)/index.html || true
@@ -159,14 +145,11 @@ style_check: $(LIB_SOURCE) $(TST_SOURCE)
 # =============================================================================
 # Build Mode Rules
 # =============================================================================
-release:
-	$(info Building release version...)
-	@RELEASE=1 $(MAKE) $(LIBRARY)
+release: $(LIBRARY)
+	$(info Release build completed.)
 
-gdb:
-	$(info Building debug version...)
-	@DEBUG=1 $(MAKE) test
-	$(info Running...)
+gdb: test
+	$(info Running with gdb...)
 	@CK_FORK=no gdb ../test
 
 rebuild: clean all
