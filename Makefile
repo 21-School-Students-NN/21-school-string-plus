@@ -61,7 +61,7 @@ TST_OBJECTS		=		$(patsubst $(TST_SOURCE_DIR)/%.c, $(TST_BUILD_DIR)/%.o, $(TST_SO
 # =============================================================================
 LIBRARY			=		s21_string.a
 
-.PHONY: all debug release style-format style-check test gcov_report clean rebuild gdb
+.PHONY: all debug release style-format style-check gcov_report clean rebuild gdb
 
 # =============================================================================
 # Build Rules
@@ -80,26 +80,24 @@ $(OBJ_BUILD_DIR)/%.o: $(LIB_SOURCE_DIR)/%.c | $(OBJ_BUILD_DIR)
 # =============================================================================
 # Testing Rules
 # =============================================================================
-test: clean style-check $(TST_OBJECTS) $(LIBRARY)
+test: $(TST_OBJECTS) $(LIBRARY)
 	$(info Assembling tests...)
 	@$(CC) $(CFLAGS) $(TST_OBJECTS) ../$(LIBRARY) $(TST_FLAG) -o ../$@
-	$(info Runing tests with valgrind...)
-	@CK_FORK=no valgrind --tool=memcheck --leak-check=full --track-origins=yes ../$@
-
-%.test: clean style-check $(TST_OBJECTS) $(LIBRARY)
-	$(info Assembling tests...)
-	@$(CC) $(CFLAGS) $(TST_OBJECTS) ../$(LIBRARY) $(TST_FLAG) -o ../$@
-	$(info Runing $*-test with valgrind...)
-	@CK_RUN_SUITE="$*" CK_FORK=no valgrind --tool=memcheck --leak-check=full --track-origins=yes ../$@
-
+	
+# $(info Runing tests with valgrind...)
+# @CK_FORK=no valgrind --tool=memcheck --leak-check=full --track-origins=yes ../$@
 $(TST_BUILD_DIR)/%.o: $(TST_SOURCE_DIR)/%.c | $(TST_BUILD_DIR)
 	$(info Building the $@ object file...)
 	@$(CC) $(CFLAGS) -c $< $(TST_FLAG) -o $@
 
-gcov_report: clean
+
+%.test: ../test
+	$(info Runing $*-test with valgrind...)
+	@CK_RUN_SUITE="$*" CK_FORK=no valgrind --tool=memcheck --leak-check=full --track-origins=yes $^
+
+gcov_report: $(COV_FRONT_DIR)
 	$(info Generating coverage report...)
 	@COVERAGE=1 $(MAKE) test
-	@$(MAKE) $(COV_FRONT_DIR)
 	@lcov --test-name "s21_string" --output-file $(COV_REPORT_DIR)/coverage.info --capture --directory $(OBJ_BUILD_DIR)
 	@genhtml $(COV_REPORT_DIR)/coverage.info --dark-mode --output-directory $(COV_FRONT_DIR)
 	@$(OPENCMD) $(COV_FRONT_DIR)/index.html || true
@@ -124,11 +122,11 @@ style-check: $(LIB_SOURCE) $(TST_SOURCE)
 # =============================================================================
 # Build Mode Rules
 # =============================================================================
-release: clean
+release:
 	$(info Building release version...)
 	@RELEASE=1 $(MAKE) $(LIBRARY)
 
-gdb: clean
+gdb:
 	$(info Building debug version...)
 	@DEBUG=1 $(MAKE) test
 	$(info Running...)
