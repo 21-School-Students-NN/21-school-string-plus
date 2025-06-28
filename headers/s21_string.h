@@ -104,7 +104,6 @@ char *s21_strncpy(char *dest, const char *src, s21_size_t n);
 char *s21_strerror(int errnum);
 
 /**
-<<<<<<< feature/s21_strcspn
  * @brief get length of a prefix substring
  * @return The `s21_strcspn()` function returns the number of bytes in the initial segment of  `str1`  which  are  not  in  the string `str2`.
  *
@@ -113,7 +112,8 @@ char *s21_strerror(int errnum);
  * @author Demian Domozhirov (DarkDomian | trelawnm at 21 Scool)
  */
 s21_size_t s21_strcspn(const char *str1, const char *str2);
-=======
+
+/**
  * @brief calculate the length of a string
  * @return the `s21_strlen()` function returns the number of bytes in the string pointed to by `str`.
  * 
@@ -121,7 +121,6 @@ s21_size_t s21_strcspn(const char *str1, const char *str2);
  * @date June 19, 2025
  * @author Demian Domozhirov (DarkDomian | trelawnm at 21 School)
  */
->>>>>>> develop
 s21_size_t s21_strlen(const char *str);
 
 /**
