@@ -23,11 +23,29 @@ typedef unsigned long s21_size_t;
  * @version 1.0
  * @return void
  * @note Notice how this comment made - you should also do it for yours func's.
- */
+*/
 void s21_example_func(void);
 void *s21_memchr(const void *str, int c, s21_size_t n);
 int s21_memcmp(const void *str1, const void *str2, s21_size_t n);
+
+/** @brief copies n bytes from memory area src to memory area dest
+ * @author Anton Gashturi (Parthen/rhydonte)
+ * @date June 22, 2025
+ * @param dest pointer to destination area
+ * @param src pointer to source area
+ * @param n number of bytes to copy
+ * @version 1.0
+ * @return a pointer to `dest`
+ * @note Notice how this comment made - you should also do it for yours func's.
+ */
 void *s21_memcpy(void *dest, const void *src, s21_size_t n);
+/** @brief Fill memory with a constant byte
+ * @author Evgeniy Parfenyuk (Parthen/rhydonte)
+ * @date June 16, 2025
+ * @version 1.0
+ * @return void *
+ * @note Actually, it returns *dest
+*/
 void *s21_memset(void *str, int c, s21_size_t n);
 
 /**
@@ -49,6 +67,16 @@ char *s21_strncat(char *dest, const char *src, s21_size_t n);
  *   or S21_NULL if the character is not found.
  */
 char *s21_strchr(const char *str, int c);
+
+/**
+ * @brief compare only the first (at most) `n` bytes of `str1` and `str2`
+ * @return the `s21_strncmp()` function return an integer less than, equal to, or greater than zero if
+ * first n bytes `str1` is found, respectively, to be less than, to match, or be greater than `str2`
+ *
+ * @version 1.0
+ * @date June 21, 2025
+ * @author Demian Domozhirov (DarkDomian | trelawnm at 21 School)
+ */
 int s21_strncmp(const char *str1, const char *str2, s21_size_t n);
 
 /**
@@ -75,6 +103,26 @@ char *s21_strncpy(char *dest, const char *src, s21_size_t n);
  * @author Demian Domozhirov (DarkDomian | trelawnm at 21 School)
  */
 char *s21_strerror(int errnum);
+
+/**
+<<<<<<< feature/s21_strcspn
+ * @brief get length of a prefix substring
+ * @return The `s21_strcspn()` function returns the number of bytes in the initial segment of  `str1`  which  are  not  in  the string `str2`.
+ *
+ * @version 0.8
+ * @date June 21, 2025
+ * @author Demian Domozhirov (DarkDomian | trelawnm at 21 Scool)
+ */
+s21_size_t s21_strcspn(const char *str1, const char *str2);
+=======
+ * @brief calculate the length of a string
+ * @return the `s21_strlen()` function returns the number of bytes in the string pointed to by `str`.
+ * 
+ * @version 0.8
+ * @date June 19, 2025
+ * @author Demian Domozhirov (DarkDomian | trelawnm at 21 School)
+ */
+>>>>>>> develop
 s21_size_t s21_strlen(const char *str);
 char *s21_strpbrk(const char *str1, const char *str2);
 char *s21_strrchr(const char *str, int c);
