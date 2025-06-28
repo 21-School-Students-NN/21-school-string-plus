@@ -55,7 +55,7 @@ void *s21_memset(void *str, int c, s21_size_t n);
  *
  * @version 0.8
  * @date June 18, 2025
- * @author Demian Domozhirov (DarkDomian/trelawnm)
+ * @author Demian Domozhirov (DarkDomian | trelawnm at 21 School)
  */
 char *s21_strncat(char *dest, const char *src, s21_size_t n);
 /**
@@ -78,7 +78,18 @@ char *s21_strchr(const char *str, int c);
  * @author Demian Domozhirov (DarkDomian | trelawnm at 21 School)
  */
 int s21_strncmp(const char *str1, const char *str2, s21_size_t n);
-char *s21_strncpy(char *dest, const char *src, s21_size_t n);
+
+/**
+ * @brief fill a fixed-size buffer with non-null bytes from a string, padding with null bytes as needed
+ * @param dest pointer to destination buffer
+ * @param src pointer to source buffer
+ * @param n the number of bytes to copy
+ * @return returns pointer to `dest`
+ *
+ * @version 0.8
+ * @date June 22, 2025
+ * @author Demian Domozhirov (DarkDomian | trelawnm at 21 School)
+ */
 char *s21_strncpy(char *dest, const char *src, s21_size_t n);
 
 /**
