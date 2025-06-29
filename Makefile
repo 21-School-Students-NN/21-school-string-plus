@@ -11,16 +11,15 @@ REL_FLAG		::=		-DNDEBUG -O2
 # =============================================================================
 # Build Mode Configuration using MAKECMDGOALS
 # =============================================================================
-# Check if any of our special targets are being built
-ifeq ($(filter gcov_report,$(MAKECMDGOALS)),gcov_report)
+ifeq ($(MAKECMDGOALS),gcov_report)
     CFLAGS += $(COV_FLAGS)
 endif
 
-ifeq ($(filter release,$(MAKECMDGOALS)),release)
+ifeq ($(MAKECMDGOALS),release)
     CFLAGS += $(REL_FLAG)
 endif
 
-ifeq ($(filter gdb,$(MAKECMDGOALS)),debug)
+ifeq ($(MAKECMDGOALS),gdb)
     CFLAGS += $(DBG_FLAGS)
 endif
 
@@ -46,6 +45,8 @@ TST_BUILD_DIR	::=		./build/test
 
 COV_REPORT_DIR	::=		../coverage
 COV_FRONT_DIR	::=		../coverage/web
+
+STAMP			::=		./build/cflags.stamp
 
 # =============================================================================
 # Source and Object Files
@@ -92,12 +93,12 @@ help:
 # =============================================================================
 all: style_check test
 
-$(LIBRARY): $(LIB_OBJECTS)
+$(LIBRARY): $(LIB_OBJECTS) $(STAMP)
 	$(info Assembling all together to static lib...)
-	@ar rcs ../$@ $^
+	@ar rcs ../$@ $(LIB_OBJECTS)
 	@ranlib ../$@
 
-$(OBJ_BUILD_DIR)/%.o: $(LIB_SOURCE_DIR)/%.c | $(OBJ_BUILD_DIR)
+$(OBJ_BUILD_DIR)/%.o: $(LIB_SOURCE_DIR)/%.c $(STAMP) | $(OBJ_BUILD_DIR)
 	$(info Building the $@ object file...)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
@@ -151,6 +152,10 @@ release: $(LIBRARY)
 gdb: test
 	$(info Running with gdb...)
 	@CK_FORK=no gdb ../test
+
+$(STAMP): $(OBJ_BUILD_DIR)
+	$(info Save stamp of run...)
+	@echo "$(CFLAGS)" > $@
 
 rebuild: clean all
 
