@@ -1,12 +1,10 @@
-name: Consistency and Build Check
+name: Branch Build and Autoformat
 
-run-name: Merge to ${{ default-branch }} by @${{ github.actor }}
+name-run: Push to ${{ github.action_repository }} by @${{ github.actor }}
 
 on:
   push:
-    branches: [ $default-branch ]
-  pull_request:
-    branches: [ $default-branch ]
+    branches-ignore: [ $default-branch ]
 
 jobs:
   build:
