@@ -9,9 +9,13 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
     - uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Install dependencies
       run: |
@@ -36,6 +40,12 @@ jobs:
             echo "Style issues persist after formatting - likely cppcheck issues"
             exit 1
           fi
+          echo "Auto-formatting successful, committing changes..."
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add -A
+          git commit -m "action(style): auto-format code with clang-format [skip ci]"
+          git push
         fi
         echo "Style check passed!"
 
