@@ -106,9 +106,8 @@ $(OBJ_BUILD_DIR)/%.o: $(LIB_SOURCE_DIR)/%.c $(STAMP) | $(OBJ_BUILD_DIR)
 # Testing Rules
 # =============================================================================
 test: $(TST_OBJECTS) $(LIBRARY)
-	$(info Assembling tests...)
+	$(info Compile tests and running with valgrind...)
 	@$(CC) $(CFLAGS) $(TST_OBJECTS) ../$(LIBRARY) $(TST_FLAG) -o ../$@
-	$(info Runing tests with valgrind...)
 	@CK_FORK=no valgrind --tool=memcheck --leak-check=full --track-origins=yes ../$@
 
 $(TST_BUILD_DIR)/%.o: $(TST_SOURCE_DIR)/%.c | $(TST_BUILD_DIR)
@@ -138,10 +137,10 @@ style_format: $(LIB_SOURCE) $(TST_SOURCE)
 	@clang-format -i --verbose --style="{BasedOnStyle: Google}" $(LIB_SOURCE) $(TST_SOURCE)
 
 style_check: $(LIB_SOURCE) $(TST_SOURCE)
-	$(info Checking style with clang-format...)
-	@clang-format -n --style="{BasedOnStyle: Google}" $(LIB_SOURCE) $(TST_SOURCE)
-	$(info Running cppcheck...)
-	@cppcheck --enable=all --force --suppress=missingIncludeSystem $(LIB_SOURCE) $(TST_SOURCE)
+	$(info Checking style with clang-format and cppcheck...)
+	@clang-format -n --style="{BasedOnStyle: Google}" --Werror $(LIB_SOURCE) $(TST_SOURCE)
+	@cppcheck --enable=all --force --suppress=missingIncludeSystem --error-exitcode=1 $(LIB_SOURCE) $(TST_SOURCE)
+	@echo "Style check passed successfully!"
 
 # =============================================================================
 # Build Mode Rules
