@@ -5,6 +5,8 @@ run-name: Push to ${{ github.ref }} by @${{ github.actor }}
 on:
   push:
     branches-ignore: [ $default-branch ]
+  pull_request:
+    branches: [ $default-branch ]
 
 jobs:
   build:
