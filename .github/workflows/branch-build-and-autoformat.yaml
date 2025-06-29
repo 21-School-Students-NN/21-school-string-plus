@@ -1,6 +1,6 @@
 name: Branch Build and Autoformat
 
-run-name: Push to ${{ github.repository }} by @${{ github.actor }}
+run-name: Push to ${{ github.ref }} by @${{ github.actor }}
 
 on:
   push:
@@ -19,12 +19,12 @@ jobs:
         sudo apt-get install -y \
           build-essential \
           pkg-config \
-          libcheck-dev \
+          check \
           valgrind \
           clang-format \
           cppcheck \
           lcov \
-          genhtml
+          lcov-genhtml
 
     - name: Style check and auto-format
       run: |
