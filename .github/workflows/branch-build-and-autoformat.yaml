@@ -1,6 +1,6 @@
 name: Branch Build and Autoformat
 
-run-name: Push to ${{ github.action_repository }} by @${{ github.actor }}
+run-name: Push to ${{ github.repository }} by @${{ github.actor }}
 
 on:
   push:
@@ -8,7 +8,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -27,12 +26,39 @@ jobs:
           lcov \
           genhtml
 
+    - name: Style check and auto-format
+      run: |
+        echo "Running style check..."
+        if ! make style_check; then
+          echo "Style issues found, attempting to auto-format..."
+          make style_format
+          echo "Re-running style check after formatting..."
+          if ! make style_check; then
+            echo "Style issues persist after formatting - likely cppcheck issues"
+            exit 1
+          fi
+        fi
+        echo "Style check passed!"
 
-    - name: configure
-      run: ./configure
+    - name: Build library
+      run: make s21_string.a
 
-    - name: Run check
-      run: make check
+    - name: Run tests
+      run: make test
 
-    - name: Run distcheck
-      run: make distcheck
+    - name: Generate coverage report
+      run: make gcov_report
+
+    - name: Build release version
+      run: make release
+
+    - name: Clean build artifacts
+      run: make clean
+
+    - name: Verify clean state
+      run: |
+        if [ -d "./build" ] || [ -f "../s21_string.a" ] || [ -f "../test" ]; then
+          echo "Clean failed - build artifacts still present"
+          exit 1
+        fi
+        echo "All targets completed successfully!" 
