@@ -23,8 +23,7 @@ jobs:
           valgrind \
           clang-format \
           cppcheck \
-          lcov \
-          lcov-genhtml
+          lcov
 
     - name: Style check and auto-format
       run: |
