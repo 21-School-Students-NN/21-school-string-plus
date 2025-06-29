@@ -1,6 +1,6 @@
 name: Branch Build and Autoformat
 
-name-run: Push to ${{ github.action_repository }} by @${{ github.actor }}
+run-name: Push to ${{ github.action_repository }} by @${{ github.actor }}
 
 on:
   push:
