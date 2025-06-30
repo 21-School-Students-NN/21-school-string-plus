@@ -22,7 +22,7 @@ int main(void) {
   srunner_add_suite(sr, s21_memset_suite());
   srunner_add_suite(sr, s21_strncmp_suite());
   srunner_add_suite(sr, s21_memcpy_suite());
-  
+
   // Check for CK_RUN_SUITE and set a custom log file
   const char *suite = getenv("CK_RUN_SUITE");
   if (suite && strlen(suite) > 0) {
@@ -30,7 +30,7 @@ int main(void) {
     snprintf(logname, sizeof(logname), "../%s.log", suite);
     srunner_set_log(sr, logname);
   } else {
-      srunner_set_log(sr, "../test.log");
+    srunner_set_log(sr, "../test.log");
   }
 
   srunner_run_all(sr, CK_NORMAL);
