@@ -23,7 +23,7 @@ typedef unsigned long s21_size_t;
  * @version 1.0
  * @return void
  * @note Notice how this comment made - you should also do it for yours func's.
-*/
+ */
 void s21_example_func(void);
 void *s21_memchr(const void *str, int c, s21_size_t n);
 int s21_memcmp(const void *str1, const void *str2, s21_size_t n);
@@ -45,7 +45,7 @@ void *s21_memcpy(void *dest, const void *src, s21_size_t n);
  * @version 1.0
  * @return void *
  * @note Actually, it returns *dest
-*/
+ */
 void *s21_memset(void *str, int c, s21_size_t n);
 
 /**
@@ -70,8 +70,9 @@ char *s21_strchr(const char *str, int c);
 
 /**
  * @brief compare only the first (at most) `n` bytes of `str1` and `str2`
- * @return the `s21_strncmp()` function return an integer less than, equal to, or greater than zero if
- * first n bytes `str1` is found, respectively, to be less than, to match, or be greater than `str2`
+ * @return the `s21_strncmp()` function return an integer less than, equal to,
+ * or greater than zero if first n bytes `str1` is found, respectively, to be
+ * less than, to match, or be greater than `str2`
  *
  * @version 1.0
  * @date June 21, 2025
@@ -106,7 +107,8 @@ char *s21_strerror(int errnum);
 
 /**
  * @brief get length of a prefix substring
- * @return The `s21_strcspn()` function returns the number of bytes in the initial segment of  `str1`  which  are  not  in  the string `str2`.
+ * @return The `s21_strcspn()` function returns the number of bytes in the
+ * initial segment of  `str1`  which  are  not  in  the string `str2`.
  *
  * @version 0.8
  * @date June 21, 2025
@@ -116,8 +118,9 @@ s21_size_t s21_strcspn(const char *str1, const char *str2);
 
 /**
  * @brief calculate the length of a string
- * @return the `s21_strlen()` function returns the number of bytes in the string pointed to by `str`.
- * 
+ * @return the `s21_strlen()` function returns the number of bytes in the string
+ * pointed to by `str`.
+ *
  * @version 0.8
  * @date June 19, 2025
  * @author Demian Domozhirov (DarkDomian | trelawnm at 21 School)
@@ -137,5 +140,45 @@ char *s21_strstr(const char *haystack, const char *needle);
  * @author Demian Domozhirov (DarkDomian | trelawnm at 21 School)
  */
 char *s21_strtok(char *str, const char *delim);
+
+/**
+ * @brief sends formatted output to a string pointed to, by str
+ * @param str pointer to string
+ * @param format pointer to format source string
+ * @param ... multiple arguments according to format string
+ * @date July 01, 2025
+ * @author Anton Gashturi (bernieer)
+ */
+int s21_sprintf(char *str, const char *format, ...);
+
+/**
+ * @brief turn string into int
+ * @param str pointer to source string
+ * @return resulting number
+ * @date July 01, 2025
+ * @author Anton Gashturi (bernieer)
+ */
+int str_to_int(const char *str);
+
+/**
+ * @brief turn int number into string
+ * @param n source number
+ * @param str pointer to resulting string
+ * @return void
+ * @date July 01, 2025
+ * @author Anton Gashturi (bernieer)
+ */
+void int_to_str(int n, char *str);
+
+/**
+ * @brief turn float number into string
+ * @param f source number
+ * @param str pointer to resulting string
+ * @param presicion number of digits after point
+ * @return void
+ * @date July 01, 2025
+ * @author Anton Gashturi (bernieer)
+ */
+void float_to_str(double f, char *str, int precision);
 
 #endif
