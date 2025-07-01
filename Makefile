@@ -27,9 +27,15 @@ endif
 # Platform-Specific Configuration
 # =============================================================================
 ifeq ($(shell uname),Darwin)
-    OPENCMD 	::= 	open
+    OPENCMD ::= open
+else ifneq ($(shell uname -r | grep -i microsoft),)
+    ifneq ($(shell which wslview 2>/dev/null),)
+        OPENCMD ::= wslview
+    else
+        OPENCMD ::= cmd.exe /c start
+    endif
 else
-    OPENCMD 	::= 	xdg-open
+    OPENCMD ::= xdg-open
 endif
 
 # =============================================================================
