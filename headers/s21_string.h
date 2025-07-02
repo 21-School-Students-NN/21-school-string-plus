@@ -168,7 +168,7 @@ int str_to_int(const char *str);
  * @date July 01, 2025
  * @author Anton Gashturi (bernieer)
  */
-void int_to_str(int n, char *str);
+void int_to_str(int n, char *str, int precision, int flags);
 
 /**
  * @brief turn float number into string
@@ -179,6 +179,18 @@ void int_to_str(int n, char *str);
  * @date July 01, 2025
  * @author Anton Gashturi (bernieer)
  */
-void float_to_str(double f, char *str, int precision);
+void float_to_str(double f, char *str, int precision, int flags);
+
+/**
+ * @brief add buffer string to str with additional spaces, according to width
+ * @param buffer pointer to source string
+ * @param str pointer to resulting string
+ * @param width minimum number of chars in string added
+ * @param minus_flag shows left or right border the buffer should be aligned
+ * @return length of string added
+ * @date July 02, 2025
+ * @author Anton Gashturi (bernieer)
+ */
+int add_substring(char *str, char *buffer, int width, int minus_flag);
 
 #endif

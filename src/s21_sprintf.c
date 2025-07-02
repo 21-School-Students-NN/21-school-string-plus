@@ -3,6 +3,9 @@
 #include "../headers/s21_string.h"
 
 #define BUFFER_SIZE 1024
+#define MINUS 1
+#define PLUS 2
+#define SPACE 4
 
 int s21_sprintf(char *str, const char *format, ...) {
   va_list args;
@@ -20,9 +23,9 @@ int s21_sprintf(char *str, const char *format, ...) {
 
       // processing of flags
       while (*f == '-' || *f == '+' || *f == ' ') {
-        if (*f == '-') flags |= 1;  // флаг '-'
-        if (*f == '+') flags |= 2;  // флаг '+'
-        if (*f == ' ') flags |= 4;  // флаг ' '
+        if (*f == '-') flags |= MINUS;  // flag '-'
+        if (*f == '+') flags |= PLUS;   // flag '+'
+        if (*f == ' ') flags |= SPACE;  // flag ' '
         f++;
       }
 
@@ -48,52 +51,26 @@ int s21_sprintf(char *str, const char *format, ...) {
         }
         case 'd': {
           int d = va_arg(args, int);
-          int_to_str(d, buffer);
-          int len = s21_strlen(buffer);
-          if (len < width) {
-            int padding = width - len;
-            for (int i = 0; i < padding; i++) *ptr++ = ' ';
-          }
-          s21_strncpy(ptr, buffer, len);
-          ptr += len;
+          int_to_str(d, buffer, precision, flags);
+          ptr += add_substring(ptr, buffer, width, flags & MINUS);
           break;
         }
         case 'f': {
           double fval = va_arg(args, double);
-          float_to_str(fval, buffer, precision >= 0 ? precision : 6);
-          int len = s21_strlen(buffer);
-          if (len < width) {
-            int padding = width - len;
-            for (int i = 0; i < padding; i++) *ptr++ = ' ';
-          }
-          s21_strncpy(ptr, buffer, len);
-          ptr += len;
+          float_to_str(fval, buffer, precision >= 0 ? precision : 6, flags);
+          ptr += add_substring(ptr, buffer, width, flags & MINUS);
           break;
         }
         case 's': {
           char *s = va_arg(args, char *);
-          int len = s21_strlen(s);
-          if (precision >= 0 && precision < len) {
-            len = precision;
-          }
-          if (len < width) {
-            int padding = width - len;
-            for (int i = 0; i < padding; i++) *ptr++ = ' ';
-          }
-          s21_strncpy(ptr, s, len);
-          ptr += len;
+          if (precision >= 0) s[precision] = '\0';
+          ptr += add_substring(ptr, buffer, width, flags & MINUS);
           break;
         }
         case 'u': {
           unsigned int u = va_arg(args, unsigned int);
-          int_to_str(u, buffer);
-          int len = s21_strlen(buffer);
-          if (len < width) {
-            int padding = width - len;
-            for (int i = 0; i < padding; i++) *ptr++ = ' ';
-          }
-          s21_strncpy(ptr, buffer, len);
-          ptr += len;
+          int_to_str(u, buffer, precision, flags);
+          ptr += add_substring(ptr, buffer, width, flags & MINUS);
           break;
         }
         case '%': {
@@ -114,11 +91,6 @@ int s21_sprintf(char *str, const char *format, ...) {
   return ptr - str;  // return the length of the string
 }
 
-/**
- * @brief turn string into int
- * @param str pointer to source string
- * @return resulting number
- */
 int str_to_int(const char *str) {
   int result = 0;  // resulting number
   int sign = 1;    // sign of the number
@@ -133,7 +105,7 @@ int str_to_int(const char *str) {
     sign = -1;  // negative number
     str++;
   } else if (*str == '+') {
-    str++;  // positive number, just missing the sign
+    str++;  // positive number
   }
 
   // turning chars in digits
@@ -145,20 +117,22 @@ int str_to_int(const char *str) {
   return sign * result;  // returning the result
 }
 
-/**
- * @brief turn int number into string
- * @param n source number
- * @param str pointer to resulting string
- * @return void
- */
-void int_to_str(int n, char *str) {
+void int_to_str(int n, char *str, int precision, int flags) {
   int i = 0, sign = n;
   if (sign < 0) n = -n;  // processing the negative n
+  int len = 0;
   while (n > 0) {
     str[i++] = n % 10 + '0';
     n /= 10;
+    len++;
   }
-  if (sign < 0) str[i++] = '-';
+  while (len++ < precision) str[i++] = '0';
+  if (sign < 0)
+    str[i++] = '-';
+  else if (flags & PLUS)
+    str[i++] = '+';
+  else if (flags & SPACE)
+    str[i++] = ' ';
   str[i] = '\0';
 
   // reversing string (swapping the chars)
@@ -169,19 +143,12 @@ void int_to_str(int n, char *str) {
   }
 }
 
-/**
- * @brief turn float number into string
- * @param f source number
- * @param str pointer to resulting string
- * @param presicion number of digits after point
- * @return void
- */
-void float_to_str(double f, char *str, int precision) {
+void float_to_str(double f, char *str, int precision, int flags) {
   int int_part = (int)f;
   double frac_part = f - (double)int_part;
 
   // turning int_part into string
-  int_to_str(int_part, str);
+  int_to_str(int_part, str, -1, flags);
   int len = s21_strlen(str);
 
   // adding the fractional part
@@ -189,6 +156,16 @@ void float_to_str(double f, char *str, int precision) {
     str[len] = '.';
     len++;
     while ((precision--) > 0) frac_part *= 10;  // multiply to 10^precision
-    int_to_str((int)frac_part, str + len);
+    int_to_str((int)frac_part, str + len, -1, 0);
   }
+}
+
+int add_substring(char *str, char *buffer, int width, int minus_flag) {
+  int len = s21_strlen(buffer);
+  if (!minus_flag)
+    for (int i = len; i < width; i++) *str++ = ' ';
+  s21_strncpy(str, buffer, len);
+  if (minus_flag)
+    for (int i = len; i < width; i++) *str++ = ' ';
+  return len < width ? width : len;
 }
