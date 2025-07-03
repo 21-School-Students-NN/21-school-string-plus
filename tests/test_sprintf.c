@@ -55,12 +55,12 @@ START_TEST(test_s21_sprintf_integers_width) {
 END_TEST
 
 START_TEST(test_s21_sprintf_floats) {
-  char buffer1[100];
-  char buffer2[100];
+  char buffer1[128];
+  char buffer2[128];
 
   // float number arg
-  const char *format = "Float: %.2f";
-  double fnumber = 3.14;
+  const char *format = "Float %+10.3f\n";
+  double fnumber = 53.3;
 
   int ret1 = s21_sprintf(buffer1, format, fnumber);
   int ret2 = sprintf(buffer2, format, fnumber);

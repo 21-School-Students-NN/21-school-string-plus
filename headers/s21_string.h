@@ -16,6 +16,14 @@ typedef unsigned long s21_size_t;
 // Define our own NULL macro
 #define S21_NULL ((void *)0)
 
+// configuration for formatting string in sscanf and sprintf
+typedef struct {
+  int width;
+  int precision;
+  int flags;
+  char length;
+} format_config;
+
 /**
  * @brief Just an example function which prints "Hello, world!"
  * @author Evgeniy Parfenyuk (Parthen/rhydonte)
@@ -168,7 +176,17 @@ int str_to_int(const char *str);
  * @date July 01, 2025
  * @author Anton Gashturi (bernieer)
  */
-void int_to_str(int n, char *str, int precision, int flags);
+void int_to_str(long n, char *str, int precision, int flags);
+
+/**
+ * @brief turn unsigned int number into string
+ * @param n source number
+ * @param str pointer to resulting string
+ * @return void
+ * @date July 01, 2025
+ * @author Anton Gashturi (bernieer)
+ */
+void uint_to_str(long unsigned n, char *str, int precision);
 
 /**
  * @brief turn float number into string
@@ -179,7 +197,7 @@ void int_to_str(int n, char *str, int precision, int flags);
  * @date July 01, 2025
  * @author Anton Gashturi (bernieer)
  */
-void float_to_str(double f, char *str, int precision, int flags);
+void float_to_str(long double f, char *str, int precision, int flags);
 
 /**
  * @brief add buffer string to str with additional spaces, according to width
@@ -191,6 +209,6 @@ void float_to_str(double f, char *str, int precision, int flags);
  * @date July 02, 2025
  * @author Anton Gashturi (bernieer)
  */
-int add_substring(char *str, char *buffer, int width, int minus_flag);
+int add_substring(char *str, char *buffer, format_config conf);
 
 #endif
