@@ -157,11 +157,11 @@ void int_to_str(long n, char *str, int precision, int flags) {
   int i = 0, sign = n;
   if (sign < 0) n = -n;  // processing the negative n
   int len = 0;
-  while (n > 0) {
+  do {
     str[i++] = n % 10 + '0';
     n /= 10;
     len++;
-  }
+  } while (n > 0);
   while (len++ < precision) str[i++] = '0';
   if (sign < 0)
     str[i++] = '-';
@@ -182,11 +182,11 @@ void int_to_str(long n, char *str, int precision, int flags) {
 void uint_to_str(unsigned long n, char *str, int precision) {
   int len = 0;
   int i = 0;
-  while (n > 0) {
+  do {
     str[i++] = n % 10 + '0';
     n /= 10;
     len++;
-  }
+  } while (n > 0);
   while (len++ < precision) str[i++] = '0';
   str[i] = '\0';
   // reversing string (swapping the chars)
@@ -209,9 +209,11 @@ void float_to_str(long double f, char *str, int precision, int flags) {
   // adding the fractional part
   if (precision > 0) {
     str[len] = '.';
-    len++;
-    while ((precision--) > 0) frac_part *= 10;  // multiply to 10^precision
-    int_to_str((long)frac_part, str + len, -1, 0);
+    for (int i = 0; i < precision; i++) {
+      frac_part *= 10;
+      str[len + 1 + i] = (int)frac_part + '0';
+      frac_part -= (int)frac_part;
+    }
   }
 }
 
@@ -222,6 +224,6 @@ int add_substring(char *str, char *buffer, format_config conf) {
     for (int i = len; i < conf.width; i++) *str++ = ' ';
   s21_strncpy(str, buffer, len);
   if (minus_flag)
-    for (int i = len; i < conf.width; i++) *str++ = ' ';
+    for (int i = len; i < conf.width; i++) str[i] = ' ';
   return len < conf.width ? conf.width : len;
 }
