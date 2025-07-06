@@ -131,6 +131,16 @@ s21_size_t s21_strcspn(const char *str1, const char *str2);
  * @author Demian Domozhirov (DarkDomian | trelawnm at 21 School)
  */
 s21_size_t s21_strlen(const char *str);
+
+/**
+ * @brief search a string for any of a set of bytes
+ * @return The `s21_strpbrk()` function returns a pointer to the byte in `str1` that matches one of the bytes in `str2`, or
+ * `S21_NULL` if no such byte is found.
+ *
+ * @version 0.8
+ * @date June 21, 2025
+ * @author Demian Domozhirov (DarkDomian/trelawnm)
+ */
 char *s21_strpbrk(const char *str1, const char *str2);
 char *s21_strrchr(const char *str, int c);
 char *s21_strstr(const char *haystack, const char *needle);
