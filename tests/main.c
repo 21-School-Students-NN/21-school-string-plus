@@ -9,11 +9,13 @@ int main(void) {
   Suite *s = s21_strerror_suite();
   SRunner *sr = srunner_create(s);
 
+  srunner_add_suite(sr, s21_strpbrk_suite());
   srunner_add_suite(sr, s21_strncat_suite());
   srunner_add_suite(sr, s21_strtok_suite());
   srunner_add_suite(sr, s21_strchr_suite());
   srunner_add_suite(sr, s21_strstr_suite());
   srunner_add_suite(sr, s21_strncpy_suite());
+  srunner_add_suite(sr, s21_memcmp_suite());
   srunner_add_suite(sr, s21_strcspn_suite());
   srunner_add_suite(sr, s21_strncat_suite());
   srunner_add_suite(sr, s21_strtok_suite());
