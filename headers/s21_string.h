@@ -80,7 +80,8 @@ char *s21_strchr(const char *str, int c);
 int s21_strncmp(const char *str1, const char *str2, s21_size_t n);
 
 /**
- * @brief fill a fixed-size buffer with non-null bytes from a string, padding with null bytes as needed
+ * @brief fill a fixed-size buffer with non-null bytes from a string, padding
+ * with null bytes as needed
  * @param dest pointer to destination buffer
  * @param src pointer to source buffer
  * @param n the number of bytes to copy
