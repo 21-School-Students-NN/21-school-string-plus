@@ -45,7 +45,7 @@ START_TEST(test_strstr_basic_match) {
     const char *haystack = "Hello, world!";
     const char *needle = "world";
     
-    const char *original_result = strstr(haystack, needle);
+    const char *original_result = strstr(haystack, needle);  // cppcheck-suppress unreadVariable
     const char *custom_result = s21_strstr(haystack, needle);
     
     ck_assert_ptr_nonnull(custom_result);
