@@ -211,4 +211,13 @@ void float_to_str(long double f, char *str, int precision, int flags);
  */
 int add_substring(char *str, char *buffer, format_config conf);
 
+/**
+ * @brief Returns a copy of string (str) converted to uppercase
+ * @param str pointer to source string
+ * @return pointer to destination string
+ * @date July 07, 2025
+ * @author Anton Gashturi (bernieer)
+ */
+void *s21_to_upper(const char *str);
+
 #endif
