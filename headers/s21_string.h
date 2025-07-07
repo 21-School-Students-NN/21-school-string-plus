@@ -156,4 +156,13 @@ char *s21_strstr(const char *haystack, const char *needle);
  */
 char *s21_strtok(char *str, const char *delim);
 
+/**
+ * @brief Returns a copy of string (str) converted to uppercase
+ * @param str pointer to source string
+ * @return pointer to destination string
+ * @date July 07, 2025
+ * @author Anton Gashturi (bernieer)
+ */
+void *s21_to_upper(const char *str);
+
 #endif
