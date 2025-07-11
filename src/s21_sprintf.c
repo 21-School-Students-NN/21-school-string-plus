@@ -198,15 +198,20 @@ void uint_to_str(unsigned long n, char *str, int precision) {
 }
 
 void float_to_str(long double f, char *str, int precision, int flags) {
-  long double int_part;   // = (long)f;
-  long double frac_part;  // = f - (long double)int_part;
-  frac_part = modfl(f, &int_part);
+  // Apply rounding
+  long double round = 0.5;
+  for (int i = 0; i < precision; i++) round /= 10.0;
+  f += (f < 0 ? -round : round);
 
-  // turning int_part into string
+  // Split into parts
+  long double int_part;
+  long double frac_part = modfl(f, &int_part);
+
+  // Convert integer part
   int_to_str((long)int_part, str, -1, flags);
   int len = s21_strlen(str);
 
-  // adding the fractional part
+  // Convert fractional part
   if (precision > 0) {
     str[len] = '.';
     for (int i = 0; i < precision; i++) {
@@ -214,10 +219,13 @@ void float_to_str(long double f, char *str, int precision, int flags) {
       str[len + 1 + i] = (int)frac_part + '0';
       frac_part -= (int)frac_part;
     }
+    str[len + 1 + precision] = '\0';  // Null-terminate
+  } else {
+    str[len] = '\0';  // Null-terminate
   }
 }
 
-int add_substring(char *str, char *buffer, format_config conf) {
+int add_substring(char *str, const char *buffer, format_config conf) {
   int len = s21_strlen(buffer);
   int minus_flag = conf.flags & MINUS;
   if (!minus_flag)

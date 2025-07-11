@@ -209,6 +209,6 @@ void float_to_str(long double f, char *str, int precision, int flags);
  * @date July 02, 2025
  * @author Anton Gashturi (bernieer)
  */
-int add_substring(char *str, char *buffer, format_config conf);
+int add_substring(char *str, const char *buffer, format_config conf);
 
 #endif
