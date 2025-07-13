@@ -70,8 +70,9 @@ END_TEST
 START_TEST(test_strstr_needle_longer) {
   const char *haystack = "short";
   const char *needle = "verylongneedle";
-  // cppcheck-suppress unreadVariable
+
   const char *original_result = strstr(haystack, needle);
+  (void)original_result;
   const char *custom_result = s21_strstr(haystack, needle);
 
   ck_asset(custom_result == NULL && original_result == NULL);
