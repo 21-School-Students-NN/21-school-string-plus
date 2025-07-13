@@ -71,7 +71,7 @@ START_TEST(test_strstr_needle_longer) {
   const char *haystack = "short";
   const char *needle = "verylongneedle";
 
-  ck_assert_ptr_eq(strstr(haystack, needle), NULL);
+  ck_assert_ptr_eq(s21_strstr(haystack, needle), NULL);
 }
 END_TEST
 
@@ -101,11 +101,8 @@ END_TEST
 START_TEST(test_strstr_no_match) {
   const char *haystack = "abc";
   const char *needle = "xyz";
-  // cppcheck-suppress unreadVariable
-  const char *original_result = strstr(haystack, needle);
-  const char *custom_result = s21_strstr(haystack, needle);
 
-  ck_assert_ptr_null(custom_result);
+  ck_assert_ptr_eq(s21_strstr(haystack, needle), NULL);
 }
 END_TEST
 
