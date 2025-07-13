@@ -127,11 +127,8 @@ START_TEST(test_strstr_repeated_chars) {
   const char *haystack = "aaaaa";
   const char *needle = "aa";
 
-  const char *original_result = strstr(haystack, needle);
-  const char *custom_result = s21_strstr(haystack, needle);
-
-  ck_assert_ptr_nonnull(custom_result);
-  ck_assert_int_eq(original_result - haystack, custom_result - haystack);
+  ck_assert_ptr_nonnull(s21_strstr(haystack, needle));
+  ck_assert_int_eq(strstr(haystack, needle) - haystack, s21_strstr(haystack, needle) - haystack);
 }
 END_TEST
 
