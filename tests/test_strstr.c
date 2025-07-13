@@ -75,9 +75,7 @@ START_TEST(test_strstr_needle_longer) {
   (void)original_result;
   const char *custom_result = s21_strstr(haystack, needle);
 
-  ck_assert_ptr_null(original_result);  
-  ck_assert_ptr_null(custom_result);  
-  //ck_asset(custom_result == NULL && original_result == NULL);
+  ck_asset(custom_result == NULL && original_result == NULL);
 }
 END_TEST
 
