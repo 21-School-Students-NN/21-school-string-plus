@@ -71,11 +71,7 @@ START_TEST(test_strstr_needle_longer) {
   const char *haystack = "short";
   const char *needle = "verylongneedle";
 
-  const char *original_result = strstr(haystack, needle);
-  (void)original_result;
-  const char *custom_result = s21_strstr(haystack, needle);
-
-  ck_asset(custom_result == NULL && original_result == NULL);
+  ck_assert_ptr_eq(strstr(haystack, needle), NULL);
 }
 END_TEST
 
