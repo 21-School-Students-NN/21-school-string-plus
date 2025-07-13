@@ -27,18 +27,18 @@ typedef struct {
 typedef int (*handler_fn)(const char **src_ptr, const fmt_token_t *tok,
                           va_list *args);
 
-int parse_int(const char **, const fmt_token_t *, va_list *);
-int parse_string(const char **, const fmt_token_t *, va_list *);
-int parse_char(const char **, const fmt_token_t *, va_list *);
-int parse_uint(const char **, const fmt_token_t *, va_list *);
-int parse_float(const char **, const fmt_token_t *, va_list *);
-int parse_Octal(const char **, const fmt_token_t *, va_list *);
-int parse_pointer(const char **, const fmt_token_t *, va_list *);
-int parse_count(const char **, const fmt_token_t *, va_list *);
+static int parse_int(const char **, const fmt_token_t *, va_list *);
+static int parse_string(const char **, const fmt_token_t *, va_list *);
+static int parse_char(const char **, const fmt_token_t *, va_list *);
+static int parse_uint(const char **, const fmt_token_t *, va_list *);
+static int parse_float(const char **, const fmt_token_t *, va_list *);
+static int parse_Octal(const char **, const fmt_token_t *, va_list *);
+static int parse_pointer(const char **, const fmt_token_t *, va_list *);
+static int parse_count(const char **, const fmt_token_t *, va_list *);
 
-void init_fmt_token(fmt_token_t *tok);
-int format_parsing(const char **format, fmt_token_t *tok);
-int char_to_digit(char c, int base);
+static void init_fmt_token(fmt_token_t *tok);
+static int format_parsing(const char **format, fmt_token_t *tok);
+static int char_to_digit(char c, int base);
 
 typedef struct {
   char specifier;
@@ -110,7 +110,7 @@ int s21_sscanf(const char *str, const char *format, ...) {
   return counter;
 }
 
-int format_parsing(const char **format, fmt_token_t *tok) {
+static int format_parsing(const char **format, fmt_token_t *tok) {
   init_fmt_token(tok);
   const char *p = *format;
   int success = 1;
@@ -162,7 +162,7 @@ int format_parsing(const char **format, fmt_token_t *tok) {
   return success;
 }
 
-void init_fmt_token(fmt_token_t *tok) {
+static void init_fmt_token(fmt_token_t *tok) {
   if (tok) {
     tok->suppress = 0;
     tok->width = 0;
@@ -172,7 +172,7 @@ void init_fmt_token(fmt_token_t *tok) {
   }
 }
 
-int parse_int(const char **str, const fmt_token_t *tok, va_list *args) {
+static int parse_int(const char **str, const fmt_token_t *tok, va_list *args) {
   long long value = 0;
   int sign = 1, base = 10, chars_read = 0, res = 1,
       max_width = tok->width ? tok->width : INT_MAX;
@@ -236,7 +236,8 @@ int parse_int(const char **str, const fmt_token_t *tok, va_list *args) {
   return res;
 }
 
-int parse_string(const char **str, const fmt_token_t *tok, va_list *args) {
+static int parse_string(const char **str, const fmt_token_t *tok,
+                        va_list *args) {
   int res = 0, len = 0, max_width = tok->width ? tok->width : INT_MAX;
   while (isspace((unsigned char)**str)) (*str)++;
   if (tok->suppress) {
@@ -257,7 +258,7 @@ int parse_string(const char **str, const fmt_token_t *tok, va_list *args) {
   return res;
 }
 
-int parse_char(const char **str, const fmt_token_t *tok, va_list *args) {
+static int parse_char(const char **str, const fmt_token_t *tok, va_list *args) {
   int width = tok->width ? tok->width : 1;
   int count = 0, res = 0;
   if (!tok->suppress) {
@@ -277,7 +278,7 @@ int parse_char(const char **str, const fmt_token_t *tok, va_list *args) {
   return res;
 }
 
-int parse_uint(const char **str, const fmt_token_t *tok, va_list *args) {
+static int parse_uint(const char **str, const fmt_token_t *tok, va_list *args) {
   unsigned long long value = 0;
   int base = 10, chars_read = 0, res = 0,
       max_width = tok->width ? tok->width : INT_MAX;
@@ -325,7 +326,8 @@ int parse_uint(const char **str, const fmt_token_t *tok, va_list *args) {
   return res;
 }
 
-int parse_float(const char **str, const fmt_token_t *tok, va_list *args) {
+static int parse_float(const char **str, const fmt_token_t *tok,
+                       va_list *args) {
   while (isspace((unsigned char)**str)) (*str)++;
   double value = 0.0;
   int sign = 1, chars_read = 0, res = 0,
@@ -385,7 +387,8 @@ int parse_float(const char **str, const fmt_token_t *tok, va_list *args) {
   return res;
 }
 
-int parse_Octal(const char **str, const fmt_token_t *tok, va_list *args) {
+static int parse_Octal(const char **str, const fmt_token_t *tok,
+                       va_list *args) {
   while (isspace((unsigned char)**str)) (*str)++;
   int res = 0;
   if (**str >= '0' && **str <= '7') {
@@ -408,7 +411,8 @@ int parse_Octal(const char **str, const fmt_token_t *tok, va_list *args) {
   return res;
 }
 
-int parse_pointer(const char **str, const fmt_token_t *tok, va_list *args) {
+static int parse_pointer(const char **str, const fmt_token_t *tok,
+                         va_list *args) {
   while (isspace((unsigned char)**str)) (*str)++;
   if (s21_strncmp(*str, "0x", 2) == 0 || s21_strncmp(*str, "0X", 2) == 0) {
     *str += 2;
@@ -435,7 +439,7 @@ int parse_pointer(const char **str, const fmt_token_t *tok, va_list *args) {
   return res;
 }
 
-int char_to_digit(char c, int base) {
+static int char_to_digit(char c, int base) {
   int digit = -1;
   if (c >= '0' && c <= '9') {
     digit = c - '0';
@@ -450,7 +454,8 @@ int char_to_digit(char c, int base) {
   return digit;
 }
 
-int parse_count(const char **str, const fmt_token_t *tok, va_list *args) {
+static int parse_count(const char **str, const fmt_token_t *tok,
+                       va_list *args) {
   if (!tok->suppress) {
     *va_arg(*args, int *) = (int)(*str - tok->start_ptr);
   }
