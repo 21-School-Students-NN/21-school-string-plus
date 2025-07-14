@@ -176,7 +176,7 @@ gdb: test
 
 clean:
 	$(info Cleaning the build artifacts...)
-	@rm -rf ./build ../$(LIBRARY) ../test* ../*.test ../coverage
+	@rm -rf $(OBJ_BUILD_DIR) $(TST_BUILD_DIR) ../$(LIBRARY) ../test* ../*.test ../coverage
 
 rebuild: clean all
 
@@ -185,11 +185,11 @@ rebuild: clean all
 # =============================================================================
 $(OBJ_BUILD_DIR):
 	$(info Creating a directory for objective file...)
-	@mkdir -p ./build $(OBJ_BUILD_DIR)
+	@mkdir -p $(OBJ_BUILD_DIR)
 
 $(TST_BUILD_DIR):
 	$(info Creating a directory for test-objective file...)
-	@mkdir -p ./build $(TST_BUILD_DIR)
+	@mkdir -p $(TST_BUILD_DIR)
 
 $(COV_FRONT_DIR):
 	$(info Creating a direcory for coverage report...)
