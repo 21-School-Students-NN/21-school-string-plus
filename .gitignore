@@ -1,2 +1,3 @@
 # exclude all object files
-build/*
+build/obj/*
+build/tests/*

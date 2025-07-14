@@ -150,6 +150,14 @@ s21_size_t s21_strlen(const char *str);
  * @author Demian Domozhirov (DarkDomian/trelawnm)
  */
 char *s21_strpbrk(const char *str1, const char *str2);
+/**
+ * @brief Finds the last occurrence of c in str
+ * @author Evgeniy Parfenyuk (Parthen/rhydonte)
+ * @date Jul 2, 2025
+ * @version 1.0
+ * @return the `s21_strrchr()` function return a pointer to the matched character
+ *   or S21_NULL if the character is not found.
+ */
 char *s21_strrchr(const char *str, int c);
 char *s21_strstr(const char *haystack, const char *needle);
 
