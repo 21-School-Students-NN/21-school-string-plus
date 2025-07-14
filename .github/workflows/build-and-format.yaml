@@ -1,0 +1,75 @@
+name: Branch Build and Autoformat
+
+run-name: Push to ${{ github.ref }} by @${{ github.actor }}
+
+on:
+  push:
+    branches-ignore: [ $default-branch ]
+  pull_request:
+    branches: [ $default-branch ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y \
+          build-essential \
+          pkg-config \
+          check \
+          valgrind \
+          clang-format \
+          cppcheck \
+          lcov
+
+    - name: Style check and auto-format
+      run: |
+        echo "Running style check..."
+        if ! make style_check; then
+          echo "Style issues found, attempting to auto-format..."
+          make style_format
+          echo "Re-running style check after formatting..."
+          if ! make style_check; then
+            echo "Style issues persist after formatting - likely cppcheck issues"
+            exit 1
+          fi
+          echo "Auto-formatting successful, committing changes..."
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add -A
+          git commit -m "action(style): auto-format code with clang-format [skip ci]"
+          git push
+        fi
+        echo "Style check passed!"
+
+    - name: Build library
+      run: make s21_string.a
+
+    - name: Run tests
+      run: make test
+
+    - name: Generate coverage report
+      run: make gcov_report
+
+    - name: Build release version
+      run: make release
+
+    - name: Clean build artifacts
+      run: make clean
+
+    - name: Verify clean state
+      run: |
+        if [ -d "./build/obj" ] || [ -d "./build/tests" ] || [ -f "../s21_string.a" ] || [ -f "../test" ]; then
+          echo "Clean failed - build artifacts still present"
+          exit 1
+        fi
+        echo "All targets completed successfully!" 
