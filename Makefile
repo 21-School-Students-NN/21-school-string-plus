@@ -138,9 +138,9 @@ $(TST_BUILD_DIR)/%.o: $(TST_SOURCE_DIR)/%.c $(FLAG_FILE) | $(TST_BUILD_DIR)
 	@$(CC) $(CFLAGS) -c $< $(TST_FLAG) -o $@
 
 
-%.test: test
+%.test: ../test
 	$(info Runing $*-test with valgrind...)
-	@CK_RUN_SUITE="$*" CK_FORK=no valgrind --tool=memcheck --leak-check=full --track-origins=yes $^
+	@CK_RUN_SUITE="$*" CK_FORK=no valgrind --tool=memcheck --leak-check=full --track-origins=yes ../test
 
 # =============================================================================
 # Assemble Coverage Data to Web-Page
