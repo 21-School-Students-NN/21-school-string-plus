@@ -243,7 +243,7 @@ static int parse_uint(const char **str, const fmt_token_t *tok, va_list *args) {
   } else if (tok->specifier == 'x' || tok->specifier == 'X') {
     base = 16;
     if (max_width > 2 && **str == '0' &&
-        (*(*str + 1) == 'x' || *(++str) == 'X')) {
+        (*(*str + 1) == 'x' || *(*str + 1) == 'X')) {
       *str += 2;
       chars_read += 2;
       max_width -= 2;
