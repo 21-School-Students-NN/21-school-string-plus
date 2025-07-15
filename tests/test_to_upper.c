@@ -13,6 +13,14 @@ START_TEST(test_to_upper_normal) {
 }
 END_TEST
 
+START_TEST(test_to_upper_special_char) {
+  const char *input = "hello123$!%23world";
+  char *result = (char *)s21_to_upper(input);
+  ck_assert_str_eq(result, "HELLO123$!%23WORLD");
+  free(result);
+}
+END_TEST
+
 START_TEST(test_to_upper_empty) {
   const char *input = "";
   char *result = (char *)s21_to_upper(input);
@@ -38,6 +46,7 @@ Suite *s21_to_upper_suite(void) {
   tcase_add_test(tc_core, test_to_upper_normal);
   tcase_add_test(tc_core, test_to_upper_empty);
   tcase_add_test(tc_core, test_to_upper_null);
+  tcase_add_test(tc_core, test_to_upper_special_char);
 
   suite_add_tcase(s, tc_core);
 
