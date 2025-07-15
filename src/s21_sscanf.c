@@ -1,69 +1,25 @@
-#include <ctype.h>
-#include <limits.h>
-#include <math.h>
-#include <stdarg.h>
-#include <stdint.h>
+#include "../headers/s21_sscanf.h"
 
 #include "../headers/s21_string.h"
 
-typedef enum {
-  LEN_NONE,
-  LEN_HH,
-  LEN_H,
-  LEN_L,
-  LEN_LL,
-  LEN_LD,
-} length_modifier_t;
-
-typedef struct {
-  int suppress;
-  int width;
-  length_modifier_t length_modifier;
-  char specifier;
-  char literal;
-  const char *start_ptr;
-} fmt_token_t;
-
-typedef int (*handler_fn)(const char **src_ptr, const fmt_token_t *tok,
-                          va_list *args);
-
+/**
+ * there is a comment about table work
+ */
 static int parse_int(const char **, const fmt_token_t *, va_list *);
 static int parse_string(const char **, const fmt_token_t *, va_list *);
 static int parse_char(const char **, const fmt_token_t *, va_list *);
 static int parse_uint(const char **, const fmt_token_t *, va_list *);
 static int parse_float(const char **, const fmt_token_t *, va_list *);
-static int parse_Octal(const char **, const fmt_token_t *, va_list *);
+static int parse_octal(const char **, const fmt_token_t *, va_list *);
 static int parse_pointer(const char **, const fmt_token_t *, va_list *);
 static int parse_count(const char **, const fmt_token_t *, va_list *);
 
+/**
+ * different functions worked outside from table
+ */
 static void init_fmt_token(fmt_token_t *tok);
 static int format_parsing(const char **format, fmt_token_t *tok);
 static int char_to_digit(char c, int base);
-
-typedef struct {
-  char specifier;
-  handler_fn func;
-} dispatch_entry_t;
-
-/**
- * @brief Parses formatted input from a string according to the specified
- * format.
- *
- * Custom implementation of the standard sscanf function as part of the
- * s21_string+ project. Supports various format specifiers (e.g., %d, %s, %f,
- * etc.), flags, width, precision, and length modifiers. Does not rely on the
- * standard library's sscanf.
- *
- * Stops parsing on mismatch and returns the number of successfully assigned
- * input items.
- *
- * @return Number of successfully assigned input items, or -1 (EOF) on
- * failure.
- *
- * @version 1.0
- * @date July 12, 2025
- * @author Amfir (s21: tyananai)
- */
 
 int s21_sscanf(const char *str, const char *format, ...) {
   if (str == S21_NULL || format == S21_NULL || *str == '\0') {
@@ -72,7 +28,7 @@ int s21_sscanf(const char *str, const char *format, ...) {
   dispatch_entry_t dispatch_table[] = {
       {'c', parse_char},   {'d', parse_int},     {'i', parse_int},
       {'e', parse_float},  {'E', parse_float},   {'f', parse_float},
-      {'g', parse_float},  {'G', parse_float},   {'o', parse_Octal},
+      {'g', parse_float},  {'G', parse_float},   {'o', parse_octal},
       {'s', parse_string}, {'u', parse_uint},    {'x', parse_uint},
       {'X', parse_uint},   {'p', parse_pointer}, {'n', parse_count}};
   const int dispatch_table_size =
@@ -287,7 +243,7 @@ static int parse_uint(const char **str, const fmt_token_t *tok, va_list *args) {
   } else if (tok->specifier == 'x' || tok->specifier == 'X') {
     base = 16;
     if (max_width > 2 && **str == '0' &&
-        (*(*str + 1) == 'x' || *(*str + 1) == 'X')) {
+        (*(*str + 1) == 'x' || *(++str) == 'X')) {
       *str += 2;
       chars_read += 2;
       max_width -= 2;
@@ -387,7 +343,7 @@ static int parse_float(const char **str, const fmt_token_t *tok,
   return res;
 }
 
-static int parse_Octal(const char **str, const fmt_token_t *tok,
+static int parse_octal(const char **str, const fmt_token_t *tok,
                        va_list *args) {
   while (isspace((unsigned char)**str)) (*str)++;
   int res = 0;

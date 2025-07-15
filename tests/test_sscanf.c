@@ -156,7 +156,7 @@ START_TEST(test_sscanf_percent) {
 END_TEST
 
 START_TEST(test_sscanf_char) {
-  const char *str = "abc";
+  const char *str = "ab c";
   char c1, c2, c3;
   char d1, d2, d3;
 
