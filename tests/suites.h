@@ -16,6 +16,7 @@ Suite *s21_strchr_suite(void);
 Suite *s21_strncpy_suite(void);
 Suite *s21_memcmp_suite(void);
 Suite *s21_sscanf_suite(void);
+Suite *s21_memchr_suite(void);
 Suite *s21_strrchr_suite(void);
 
 #endif /* SUITES_H */
