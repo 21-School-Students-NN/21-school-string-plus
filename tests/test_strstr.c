@@ -13,6 +13,15 @@ START_TEST(test_strstr_needle_eq_haystack) {
 }
 END_TEST
 
+START_TEST(test_strstr_needle_are_zero) {
+  const char *haystack = "";
+  const char *needle = "\0";
+  const char *original_result = strstr(haystack, needle);
+  const char *custom_result = s21_strstr(haystack, needle);
+  ck_assert_ptr_eq(original_result, custom_result);
+}
+END_TEST
+
 // finding an existing substring
 START_TEST(test_strstr_basic_match) {
   const char *haystack = "Hello, world!";
@@ -105,7 +114,7 @@ END_TEST
 
 // test set
 Suite *s21_strstr_suite(void) {
-  Suite *s = suite_create("s21_strstr");
+  Suite *s = suite_create("strstr");
   TCase *tc = tcase_create("Core");
 
   // add tests to test-case
@@ -118,6 +127,7 @@ Suite *s21_strstr_suite(void) {
   tcase_add_test(tc, test_strstr_no_match);
   tcase_add_test(tc, test_strstr_partial_match);
   tcase_add_test(tc, test_strstr_repeated_chars);
+  tcase_add_test(tc, test_strstr_needle_are_zero);
 
   suite_add_tcase(s, tc);
   return s;
