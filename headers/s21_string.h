@@ -25,6 +25,14 @@ typedef unsigned long s21_size_t;
  * @note Notice how this comment made - you should also do it for yours func's.
  */
 void s21_example_func(void);
+/**
+ * @brief Finds the first occurrence of c in first n bytes of str
+ * @author Evgeniy Parfenyuk (Parthen/rhydonte)
+ * @date Jule 3, 2025
+ * @version 1.0
+ * @return return a pointer to the matching byte or S21_NULL
+ * 	 if the character does not occur in the given memory area.
+ */
 void *s21_memchr(const void *str, int c, s21_size_t n);
 int s21_memcmp(const void *str1, const void *str2, s21_size_t n);
 
@@ -93,7 +101,6 @@ int s21_strncmp(const char *str1, const char *str2, s21_size_t n);
  * @author Demian Domozhirov (DarkDomian | trelawnm at 21 School)
  */
 char *s21_strncpy(char *dest, const char *src, s21_size_t n);
-
 /**
  * @brief get error message string
  * @return a pointer to a string that describes the error code passed in  the
@@ -138,7 +145,24 @@ s21_size_t s21_strlen(const char *str);
  * @author Demian Domozhirov (DarkDomian/trelawnm)
  */
 char *s21_strpbrk(const char *str1, const char *str2);
+/**
+ * @brief Finds the last occurrence of c in str
+ * @author Evgeniy Parfenyuk (Parthen/rhydonte)
+ * @date Jul 2, 2025
+ * @version 1.0
+ * @return the `s21_strrchr()` function return a pointer to the matched character
+ *   or S21_NULL if the character is not found.
+ */
 char *s21_strrchr(const char *str, int c);
+
+/**
+ * @brief locate a substring
+ * @return These functions return a pointer to the beginning of the located substring, or `S21_NULL` if the substring is not found.
+ *
+ * @version 1.0
+ * @date June 20, 2025
+ * @author Mark Mindrin (@GOOD3113)
+ */
 char *s21_strstr(const char *haystack, const char *needle);
 
 /**
@@ -162,5 +186,14 @@ char *s21_strtok(char *str, const char *delim);
  * @author Anton Gashturi (bernieer)
  */
 void *s21_to_lower(const char *str);
+
+/**
+ * @brief Returns a copy of string (str) converted to uppercase
+ * @param str pointer to source string
+ * @return pointer to destination string
+ * @date July 07, 2025
+ * @author Anton Gashturi (bernieer)
+ */
+void *s21_to_upper(const char *str);
 
 #endif
