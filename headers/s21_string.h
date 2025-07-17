@@ -200,58 +200,6 @@ char *s21_strtok(char *str, const char *delim);
 int s21_sprintf(char *str, const char *format, ...);
 
 /**
- * @brief turn string into int
- * @param str pointer to source string
- * @return resulting number
- * @date July 01, 2025
- * @author Anton Gashturi (bernieer)
- */
-int str_to_int(const char *str);
-
-/**
- * @brief turn int number into string
- * @param n source number
- * @param str pointer to resulting string
- * @return void
- * @date July 01, 2025
- * @author Anton Gashturi (bernieer)
- */
-void int_to_str(long n, char *str, int precision, int flags);
-
-/**
- * @brief turn unsigned int number into string
- * @param n source number
- * @param str pointer to resulting string
- * @return void
- * @date July 01, 2025
- * @author Anton Gashturi (bernieer)
- */
-void uint_to_str(long unsigned n, char *str, int precision);
-
-/**
- * @brief turn float number into string
- * @param f source number
- * @param str pointer to resulting string
- * @param presicion number of digits after point
- * @return void
- * @date July 01, 2025
- * @author Anton Gashturi (bernieer)
- */
-void float_to_str(long double f, char *str, int precision, int flags);
-
-/**
- * @brief add buffer string to str with additional spaces, according to width
- * @param buffer pointer to source string
- * @param str pointer to resulting string
- * @param width minimum number of chars in string added
- * @param minus_flag shows left or right border the buffer should be aligned
- * @return length of string added
- * @date July 02, 2025
- * @author Anton Gashturi (bernieer)
- */
-int add_substring(char *str, const char *buffer, format_config conf);
-
-/**
  * @brief Returns
  * @return a pointer to new string in which all leading and trailing
  * occurrences of

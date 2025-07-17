@@ -8,6 +8,169 @@
 #define PLUS 2
 #define SPACE 4
 
+// configuration for formatting string in sscanf and sprintf
+typedef struct {
+  int width;
+  int precision;
+  int flags;
+  char length;
+} format_config;
+
+/**
+ * @brief turn string into int
+ * @param str pointer to source string
+ * @return resulting number
+ * @date July 01, 2025
+ * @author Anton Gashturi (bernieer)
+ */
+static int str_to_int(const char *str) {
+  int result = 0;  // resulting number
+  int sign = 1;    // sign of the number
+
+  // missing the space chars in the begginning of *str
+  while (*str == ' ') {
+    str++;
+  }
+
+  // processing of sign
+  if (*str == '-') {
+    sign = -1;  // negative number
+    str++;
+  } else if (*str == '+') {
+    str++;  // positive number
+  }
+
+  // turning chars in digits
+  while (*str >= '0' && *str <= '9') {
+    result = result * 10 + (*str - '0');  // rewright the result
+    str++;
+  }
+
+  return sign * result;  // returning the result
+}
+
+/**
+ * @brief turn int number into string
+ * @param n source number
+ * @param str pointer to resulting string
+ * @return void
+ * @date July 01, 2025
+ * @author Anton Gashturi (bernieer)
+ */
+static void int_to_str(long n, char *str, int precision, int flags) {
+  int i = 0, sign = n;
+  if (sign < 0) n = -n;  // processing the negative n
+  int len = 0;
+  do {
+    str[i++] = n % 10 + '0';
+    n /= 10;
+    len++;
+  } while (n > 0);
+  while (len++ < precision) str[i++] = '0';
+  if (sign < 0)
+    str[i++] = '-';
+  else if (flags & PLUS)
+    str[i++] = '+';
+  else if (flags & SPACE)
+    str[i++] = ' ';
+  str[i] = '\0';
+
+  // reversing string (swapping the chars)
+  for (int j = 0; j < i / 2; j++) {
+    char temp = str[j];
+    str[j] = str[i - j - 1];
+    str[i - j - 1] = temp;
+  }
+}
+
+/**
+ * @brief turn unsigned int number into string
+ * @param n source number
+ * @param str pointer to resulting string
+ * @return void
+ * @date July 01, 2025
+ * @author Anton Gashturi (bernieer)
+ */
+static void uint_to_str(unsigned long n, char *str, int precision) {
+  int len = 0;
+  int i = 0;
+  do {
+    str[i++] = n % 10 + '0';
+    n /= 10;
+    len++;
+  } while (n > 0);
+  while (len++ < precision) str[i++] = '0';
+  str[i] = '\0';
+  // reversing string (swapping the chars)
+  for (int j = 0; j < i / 2; j++) {
+    char temp = str[j];
+    str[j] = str[i - j - 1];
+    str[i - j - 1] = temp;
+  }
+}
+
+/**
+ * @brief turn float number into string
+ * @param f source number
+ * @param str pointer to resulting string
+ * @param presicion number of digits after point
+ * @return void
+ * @date July 01, 2025
+ * @author Anton Gashturi (bernieer)
+ */
+static void float_to_str(long double f, char *str, int precision, int flags) {
+  // Apply rounding
+  long double round = 0.5;
+  for (int i = 0; i < precision; i++) round /= 10.0;
+  f += (f < 0 ? -round : round);
+
+  // Split into parts
+  long double int_part;
+  long double frac_part = modfl(f, &int_part);
+
+  // Convert integer part
+  int_to_str((long)int_part, str, -1, flags);
+  int len = s21_strlen(str);
+
+  // Convert fractional part
+  if (precision > 0) {
+    str[len] = '.';
+    for (int i = 0; i < precision; i++) {
+      frac_part *= 10;
+      str[len + 1 + i] = (int)frac_part + '0';
+      frac_part -= (int)frac_part;
+    }
+    str[len + 1 + precision] = '\0';  // Null-terminate
+  } else {
+    str[len] = '\0';  // Null-terminate
+  }
+}
+
+
+/**
+ * @brief add buffer string to str with additional spaces, according to width
+ * @param buffer pointer to source string
+ * @param str pointer to resulting string
+ * @param width minimum number of chars in string added
+ * @param minus_flag shows left or right border the buffer should be aligned
+ * @return length of string added
+ * @date July 02, 2025
+ * @author Anton Gashturi (bernieer)
+ */
+static int add_substring(char *str, const char *buffer, format_config conf) {
+  int len = s21_strlen(buffer);
+  int minus_flag = conf.flags & MINUS;
+  if (!minus_flag)
+    for (int i = len; i < conf.width; i++) *str++ = ' ';
+  s21_strncpy(str, buffer, len);
+  if (minus_flag)
+    for (int i = len; i < conf.width; i++) str[i] = ' ';
+  return len < conf.width ? conf.width : len;
+}
+
+/**
+ * initialize of format_config struct
+ */
 void config_init(format_config *conf) {
   conf->width = 0;
   conf->precision = -1;
@@ -15,6 +178,9 @@ void config_init(format_config *conf) {
   conf->length = ' ';
 }
 
+/**
+ * parcer for formated string
+ */
 const char *format_parse(format_config *conf, const char *f) {
   while (*f == '-' || *f == '+' || *f == ' ') {
     if (*f == '-') conf->flags |= MINUS;  // flag '-'
@@ -125,113 +291,4 @@ int s21_sprintf(char *str, const char *format, ...) {
   *ptr = '\0';  // ending the string
   va_end(args);
   return ptr - str;  // return the length of the string
-}
-
-int str_to_int(const char *str) {
-  int result = 0;  // resulting number
-  int sign = 1;    // sign of the number
-
-  // missing the space chars in the begginning of *str
-  while (*str == ' ') {
-    str++;
-  }
-
-  // processing of sign
-  if (*str == '-') {
-    sign = -1;  // negative number
-    str++;
-  } else if (*str == '+') {
-    str++;  // positive number
-  }
-
-  // turning chars in digits
-  while (*str >= '0' && *str <= '9') {
-    result = result * 10 + (*str - '0');  // rewright the result
-    str++;
-  }
-
-  return sign * result;  // returning the result
-}
-
-void int_to_str(long n, char *str, int precision, int flags) {
-  int i = 0, sign = n;
-  if (sign < 0) n = -n;  // processing the negative n
-  int len = 0;
-  do {
-    str[i++] = n % 10 + '0';
-    n /= 10;
-    len++;
-  } while (n > 0);
-  while (len++ < precision) str[i++] = '0';
-  if (sign < 0)
-    str[i++] = '-';
-  else if (flags & PLUS)
-    str[i++] = '+';
-  else if (flags & SPACE)
-    str[i++] = ' ';
-  str[i] = '\0';
-
-  // reversing string (swapping the chars)
-  for (int j = 0; j < i / 2; j++) {
-    char temp = str[j];
-    str[j] = str[i - j - 1];
-    str[i - j - 1] = temp;
-  }
-}
-
-void uint_to_str(unsigned long n, char *str, int precision) {
-  int len = 0;
-  int i = 0;
-  do {
-    str[i++] = n % 10 + '0';
-    n /= 10;
-    len++;
-  } while (n > 0);
-  while (len++ < precision) str[i++] = '0';
-  str[i] = '\0';
-  // reversing string (swapping the chars)
-  for (int j = 0; j < i / 2; j++) {
-    char temp = str[j];
-    str[j] = str[i - j - 1];
-    str[i - j - 1] = temp;
-  }
-}
-
-void float_to_str(long double f, char *str, int precision, int flags) {
-  // Apply rounding
-  long double round = 0.5;
-  for (int i = 0; i < precision; i++) round /= 10.0;
-  f += (f < 0 ? -round : round);
-
-  // Split into parts
-  long double int_part;
-  long double frac_part = modfl(f, &int_part);
-
-  // Convert integer part
-  int_to_str((long)int_part, str, -1, flags);
-  int len = s21_strlen(str);
-
-  // Convert fractional part
-  if (precision > 0) {
-    str[len] = '.';
-    for (int i = 0; i < precision; i++) {
-      frac_part *= 10;
-      str[len + 1 + i] = (int)frac_part + '0';
-      frac_part -= (int)frac_part;
-    }
-    str[len + 1 + precision] = '\0';  // Null-terminate
-  } else {
-    str[len] = '\0';  // Null-terminate
-  }
-}
-
-int add_substring(char *str, const char *buffer, format_config conf) {
-  int len = s21_strlen(buffer);
-  int minus_flag = conf.flags & MINUS;
-  if (!minus_flag)
-    for (int i = len; i < conf.width; i++) *str++ = ' ';
-  s21_strncpy(str, buffer, len);
-  if (minus_flag)
-    for (int i = len; i < conf.width; i++) str[i] = ' ';
-  return len < conf.width ? conf.width : len;
 }
