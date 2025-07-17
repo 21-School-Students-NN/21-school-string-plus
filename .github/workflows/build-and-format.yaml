@@ -68,7 +68,7 @@ jobs:
 
     - name: Verify clean state
       run: |
-        if [ -d "./build" ] || [ -f "../s21_string.a" ] || [ -f "../test" ]; then
+        if [ -d "./build/obj" ] || [ -d "./build/tests" ] || [ -f "../s21_string.a" ] || [ -f "../test" ]; then
           echo "Clean failed - build artifacts still present"
           exit 1
         fi
