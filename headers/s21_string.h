@@ -25,6 +25,7 @@ typedef unsigned long s21_size_t;
  * @note Notice how this comment made - you should also do it for yours func's.
  */
 void s21_example_func(void);
+
 /**
  * @brief Finds the first occurrence of c in first n bytes of str
  * @author Evgeniy Parfenyuk (Parthen/rhydonte)
@@ -47,6 +48,7 @@ int s21_memcmp(const void *str1, const void *str2, s21_size_t n);
  * @note Notice how this comment made - you should also do it for yours func's.
  */
 void *s21_memcpy(void *dest, const void *src, s21_size_t n);
+
 /** @brief Fill memory with a constant byte
  * @author Evgeniy Parfenyuk (Parthen/rhydonte)
  * @date June 16, 2025
@@ -66,6 +68,7 @@ void *s21_memset(void *str, int c, s21_size_t n);
  * @author Demian Domozhirov (DarkDomian | trelawnm at 21 School)
  */
 char *s21_strncat(char *dest, const char *src, s21_size_t n);
+
 /**
  * @brief Finds the first occurrence of c in str
  * @author Evgeniy Parfenyuk (Parthen/rhydonte)
@@ -101,6 +104,7 @@ int s21_strncmp(const char *str1, const char *str2, s21_size_t n);
  * @author Demian Domozhirov (DarkDomian | trelawnm at 21 School)
  */
 char *s21_strncpy(char *dest, const char *src, s21_size_t n);
+
 /**
  * @brief get error message string
  * @return a pointer to a string that describes the error code passed in  the
@@ -145,6 +149,7 @@ s21_size_t s21_strlen(const char *str);
  * @author Demian Domozhirov (DarkDomian/trelawnm)
  */
 char *s21_strpbrk(const char *str1, const char *str2);
+
 /**
  * @brief Finds the last occurrence of c in str
  * @author Evgeniy Parfenyuk (Parthen/rhydonte)
@@ -176,6 +181,17 @@ char *s21_strstr(const char *haystack, const char *needle);
  */
 char *s21_strtok(char *str, const char *delim);
 
+/** @brief Returns a new string in which a specified
+ * @param str string is inserted at
+ * @param start_index a specified index position in
+ * @param src the given string
+ * @author Anton Gashturi (Parthen/rhydonte)
+ * @return a pointer to `dest`
+ * @date July 8, 2025
+ * @version 1.0
+ */
+void *s21_insert(const char *src, const char *str, s21_size_t start_index);
+
 /**
  * @brief returns a copy of string (str) converted to lowercase
  * @return void* pointer to a copy of string (str) converted to lowercase. In
@@ -197,3 +213,4 @@ void *s21_to_lower(const char *str);
 void *s21_to_upper(const char *str);
 
 #endif
+
