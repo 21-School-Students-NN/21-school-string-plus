@@ -1,5 +1,3 @@
-#include <s21_string.h>
-
 #include "../headers/s21_errno.h"
 #include "../headers/s21_string.h"
 

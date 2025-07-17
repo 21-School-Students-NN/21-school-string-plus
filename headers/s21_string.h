@@ -35,6 +35,17 @@ void s21_example_func(void);
  * 	 if the character does not occur in the given memory area.
  */
 void *s21_memchr(const void *str, int c, s21_size_t n);
+
+/**
+ * @brief compares the first n bytes of str1 and str2.
+ * @return an integer less than, equal to, or greater than zero if the first n
+ bytes of s1 is found, respectively, to be less than, to match, or be greater
+ than the first n bytes of s2.
+ *
+ * @version 1.0
+ * @date June 12, 2025
+ * @author Amfir (s21: tyananai)
+ */
 int s21_memcmp(const void *str1, const void *str2, s21_size_t n);
 
 /** @brief copies n bytes from memory area src to memory area dest
