@@ -28,8 +28,8 @@ void s21_example_func(void);
 
 /**
  * @brief Finds the first occurrence of c in first n bytes of str
- * @author Evgeniy Parfenyuk (Parthen/rhydonte)
- * @date Jule 3, 2025
+ * @author Evgeniy Parfenyuk (Parthen/rhydonte) x Demian Domozhirov (DarkDomian | trelawnm at 21 School)
+ * @date Jule 17, 2025
  * @version 1.0
  * @return return a pointer to the matching byte or S21_NULL
  * 	 if the character does not occur in the given memory area.
