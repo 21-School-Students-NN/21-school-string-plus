@@ -25,6 +25,7 @@ typedef unsigned long s21_size_t;
  * @note Notice how this comment made - you should also do it for yours func's.
  */
 void s21_example_func(void);
+
 /**
  * @brief Finds the first occurrence of c in first n bytes of str
  * @author Evgeniy Parfenyuk (Parthen/rhydonte)
@@ -47,6 +48,7 @@ int s21_memcmp(const void *str1, const void *str2, s21_size_t n);
  * @note Notice how this comment made - you should also do it for yours func's.
  */
 void *s21_memcpy(void *dest, const void *src, s21_size_t n);
+
 /** @brief Fill memory with a constant byte
  * @author Evgeniy Parfenyuk (Parthen/rhydonte)
  * @date June 16, 2025
@@ -60,14 +62,13 @@ void *s21_memset(void *str, int c, s21_size_t n);
  * @brief append non-null bytes from a source array to a string, and
  * null-terminate the result
  * @return s21_strncat() return dest
- *@date July 8, 2025
- * @version 1.0
  *
  * @version 0.8
  * @date June 18, 2025
  * @author Demian Domozhirov (DarkDomian | trelawnm at 21 School)
  */
 char *s21_strncat(char *dest, const char *src, s21_size_t n);
+
 /**
  * @brief Finds the first occurrence of c in str
  * @author Evgeniy Parfenyuk (Parthen/rhydonte)
@@ -84,9 +85,7 @@ char *s21_strchr(const char *str, int c);
  * or greater than zero if first n bytes `str1` is found, respectively, to be
  * less than, to match, or be greater than `str2`
  *
- * @version 1.0@date July 8, 2025
  * @version 1.0
- *
  * @date June 21, 2025
  * @author Demian Domozhirov (DarkDomian | trelawnm at 21 School)
  */
@@ -105,15 +104,14 @@ int s21_strncmp(const char *str1, const char *str2, s21_size_t n);
  * @author Demian Domozhirov (DarkDomian | trelawnm at 21 School)
  */
 char *s21_strncpy(char *dest, const char *src, s21_size_t n);
+
 /**
  * @brief get error message string
  * @return a pointer to a string that describes the error code passed in  the
  * argument  errnum
  *
  * @version 1.0
- * @date June 6, 2025@date July 8, 2025
- * @version 1.0
- *
+ * @date June 6, 2025
  * @author Demian Domozhirov (DarkDomian | trelawnm at 21 School)
  */
 char *s21_strerror(int errnum);
@@ -151,6 +149,7 @@ s21_size_t s21_strlen(const char *str);
  * @author Demian Domozhirov (DarkDomian/trelawnm)
  */
 char *s21_strpbrk(const char *str1, const char *str2);
+
 /**
  * @brief Finds the last occurrence of c in str
  * @author Evgeniy Parfenyuk (Parthen/rhydonte)
@@ -177,9 +176,7 @@ char *s21_strstr(const char *haystack, const char *needle);
  * `S21_NULL` if there are no more tokens.
  *
  * @version 8.0
- * @date June 19, 2025@date July 8, 2025
- * @version 1.0
- *
+ * @date June 19, 2025
  * @author Demian Domozhirov (DarkDomian | trelawnm at 21 School)
  */
 char *s21_strtok(char *str, const char *delim);
