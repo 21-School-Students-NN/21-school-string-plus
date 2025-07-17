@@ -181,6 +181,18 @@ char *s21_strstr(const char *haystack, const char *needle);
  */
 char *s21_strtok(char *str, const char *delim);
 
+/**
+ * @brief Returns
+ * @return a pointer to new string in which all leading and trailing
+ * occurrences of
+ * @param trim_chars a set of specified characters from
+ * @param src the given string are removed.
+ * In case of any error, return NULL.
+ * @date July 11, 2025
+ * @author Anton Gashturi (bernieer)
+ */
+void *s21_trim(const char *src, const char *trim_chars);
+
 /** @brief Returns a new string in which a specified
  * @param str string is inserted at
  * @param start_index a specified index position in
@@ -213,4 +225,3 @@ void *s21_to_lower(const char *str);
 void *s21_to_upper(const char *str);
 
 #endif
-
