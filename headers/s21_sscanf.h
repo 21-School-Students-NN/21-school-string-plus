@@ -33,5 +33,8 @@ typedef struct {
   handler_fn func;
 } dispatch_entry_t;
 
-
+typedef struct {
+  const char *clm;
+  length_modifier_t length_modifier;
+} dispatch_length_modifier;
 #endif

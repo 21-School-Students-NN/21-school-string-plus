@@ -1,3 +1,4 @@
+#include <errno.h>
 #include <float.h>
 #include <limits.h>
 #include <math.h>
@@ -84,7 +85,7 @@ END_TEST
 
 START_TEST(test_sscanf_n_specifier) {
   const char *str = "12345";
-  int d1, d2, n1 = 0, n2 = 0;
+  int d1 = 0, d2 = 0, n1 = 0, n2 = 0;
 
   int res1 = s21_sscanf(str, "%d%n", &d1, &n1);
   int res2 = sscanf(str, "%d%n", &d2, &n2);
@@ -378,7 +379,6 @@ END_TEST
 Suite *s21_sscanf_suite(void) {
   Suite *s = suite_create("sscanf");
   TCase *tc = tcase_create("Core");
-
   tcase_add_test(tc, test_sscanf_basic);
   tcase_add_test(tc, test_sscanf_float);
   tcase_add_test(tc, test_sscanf_int_formats);

@@ -1,9 +1,10 @@
 #include "../headers/s21_sscanf.h"
 
+#include <stdio.h>
+
 #include "../headers/s21_string.h"
 #include "s21_strlen.c"
 #include "s21_strncmp.c"
-
 /**
  * there is a comment about table work
  */
@@ -29,7 +30,8 @@ static void space_skip(const char **format, const char **str);
 static int processing_specifiers(const char **format, fmt_token_t *tok,
                                  const int length_modifier_t_size,
                                  const dispatch_length_modifier *lmt);
-static int skip_before_fspec(const char **format, const char **str);
+static int skip_before_fspec(const char **format, const char **str,
+                             const fmt_token_t *tok);
 static int char_to_digit(char c, int base);
 
 int s21_sscanf(const char *str, const char *format, ...) {
@@ -66,7 +68,7 @@ static int parse_format(const char **format, const char **str, va_list *args) {
   const int length_modifier_t_size = sizeof(lmt) / sizeof(lmt[0]);
   while (flag) {
     space_skip(&fp, &strp);
-    int whats_next = skip_before_fspec(&fp, &strp);
+    int whats_next = skip_before_fspec(&fp, &strp, &tok);
     if (whats_next == 2) {
       status_proc_spec =
           processing_specifiers(&fp, &tok, length_modifier_t_size, lmt);
@@ -138,11 +140,12 @@ static int processing_specifiers(const char **format, fmt_token_t *tok,
   *format = fp;
   return success;
 }
-static int skip_before_fspec(const char **format, const char **str) {
+static int skip_before_fspec(const char **format, const char **str,
+                             const fmt_token_t *tok) {
   int fl = 0;  // discrepancy=1, start_fspec=2, the end=0.
   const char *fp = *format;
   const char *strp = *str;
-  while (*fp && *strp) {
+  while (*fp && tok->specifier != 'n') {
     if (*fp == '%' && *(fp + 1) != '%') {
       fp++;
       fl = 2;
@@ -459,7 +462,7 @@ static int char_to_digit(char c, int base) {
   }
   return digit;
 }
-#include <stdio.h>
+
 static int parse_count(const char **str, const fmt_token_t *tok,
                        va_list *args) {
   if (!tok->suppress) {
