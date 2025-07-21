@@ -36,13 +36,24 @@ void s21_example_func(void);
 
 /**
  * @brief Finds the first occurrence of c in first n bytes of str
- * @author Evgeniy Parfenyuk (Parthen/rhydonte)
- * @date Jule 3, 2025
+ * @author Evgeniy Parfenyuk (Parthen/rhydonte) x Demian Domozhirov (DarkDomian | trelawnm at 21 School)
+ * @date Jule 17, 2025
  * @version 1.0
  * @return return a pointer to the matching byte or S21_NULL
  * 	 if the character does not occur in the given memory area.
  */
 void *s21_memchr(const void *str, int c, s21_size_t n);
+
+/**
+ * @brief compares the first n bytes of str1 and str2.
+ * @return an integer less than, equal to, or greater than zero if the first n
+ bytes of s1 is found, respectively, to be less than, to match, or be greater
+ than the first n bytes of s2.
+ *
+ * @version 1.0
+ * @date June 12, 2025
+ * @author Amfir (s21: tyananai)
+ */
 int s21_memcmp(const void *str1, const void *str2, s21_size_t n);
 
 /** @brief copies n bytes from memory area src to memory area dest

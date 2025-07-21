@@ -1,5 +1,4 @@
-// TODO: remove <string.h> call from file
-#include <string.h>
+#include <s21_string.h>
 
 #include "../headers/s21_string.h"
 
@@ -31,8 +30,6 @@ static s21_size_t s21_strspn(const char *str, const char *accept) {
   return count;
 }
 
-// TODO: add `s21_` prefix to `strpbrk` and `strchr` when they will be done
-
 char *s21_strtok(char *str, const char *delim) {
   char *token;
 
@@ -47,9 +44,9 @@ char *s21_strtok(char *str, const char *delim) {
 
   /* Find the end of the token. */
   token = str;
-  str = strpbrk(token, delim);
+  str = s21_strpbrk(token, delim);
   if (str == S21_NULL) /* This token finishes the string.  */
-    olds = strchr(token, '\0');
+    olds = s21_strchr(token, '\0');
   else {
     /* Terminate the token and make OLDS point past it.  */
     *str = '\0';
