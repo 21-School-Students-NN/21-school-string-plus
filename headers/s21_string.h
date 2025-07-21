@@ -25,6 +25,18 @@ typedef struct {
 } format_config;
 
 /**
+ * @brief Constant indicating end-of-file or input failure.
+ * @details `S21_EOF` is returned by functions like `s21_sscanf()` when no input
+ * items are successfully matched. It is equivalent to the standard `EOF`,
+ * defined as -1.
+ *
+ * @version 1.0
+ * @date July 11, 2025
+ * @author Amfir (s21: tyananai)
+ */
+#define S21_EOF -1
+
+/**
  * @brief Just an example function which prints "Hello, world!"
  * @author Evgeniy Parfenyuk (Parthen/rhydonte)
  * @date June 4, 2025
@@ -212,6 +224,18 @@ int s21_sprintf(char *str, const char *format, ...);
 
 /**
  * @brief Returns
+ * @brief Parses formatted input from a string.
+ * @return The `s21_sscanf()` function returns the number of input items
+ * successfully matched and assigned, or `-1` (EOF) if an input failure occurs
+ * before any assignment.
+ *
+ * @version 1.0
+ * @date July 11, 2025
+ * @author Amfir (s21: tyananai)
+ */
+int s21_sscanf(const char *str, const char *format, ...);
+
+ /** @brief Returns
  * @return a pointer to new string in which all leading and trailing
  * occurrences of
  * @param trim_chars a set of specified characters from

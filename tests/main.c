@@ -25,6 +25,7 @@ int main(void) {
   srunner_add_suite(sr, s21_strncmp_suite());
   srunner_add_suite(sr, s21_memcpy_suite());
   srunner_add_suite(sr, s21_sprintf_suite());
+  srunner_add_suite(sr, s21_sscanf_suite());
   srunner_add_suite(sr, s21_trim_suite());
   srunner_add_suite(sr, s21_insert_suite());
   srunner_add_suite(sr, s21_to_lower_suite());
