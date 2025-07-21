@@ -16,14 +16,6 @@ typedef unsigned long s21_size_t;
 // Define our own NULL macro
 #define S21_NULL ((void *)0)
 
-// configuration for formatting string in sscanf and sprintf
-typedef struct {
-  int width;
-  int precision;
-  int flags;
-  char length;
-} format_config;
-
 /**
  * @brief Constant indicating end-of-file or input failure.
  * @details `S21_EOF` is returned by functions like `s21_sscanf()` when no input

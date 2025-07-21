@@ -1,3 +1,5 @@
+#include "../headers/s21_sprintf.h"
+
 #include <math.h>
 #include <stdarg.h>
 
@@ -7,14 +9,6 @@
 #define MINUS 1
 #define PLUS 2
 #define SPACE 4
-
-// configuration for formatting string in sscanf and sprintf
-typedef struct {
-  int width;
-  int precision;
-  int flags;
-  char length;
-} format_config;
 
 /**
  * @brief turn string into int
@@ -145,7 +139,6 @@ static void float_to_str(long double f, char *str, int precision, int flags) {
     str[len] = '\0';  // Null-terminate
   }
 }
-
 
 /**
  * @brief add buffer string to str with additional spaces, according to width
