@@ -205,6 +205,17 @@ char *s21_strstr(const char *haystack, const char *needle);
 char *s21_strtok(char *str, const char *delim);
 
 /**
+ * @brief sends formatted output to a string pointed to, by str
+ * @param str pointer to string
+ * @param format pointer to format source string
+ * @param ... multiple arguments according to format string
+ * @date July 01, 2025
+ * @author Anton Gashturi (bernieer)
+ */
+int s21_sprintf(char *str, const char *format, ...);
+
+/**
+ * @brief Returns
  * @brief Parses formatted input from a string.
  * @return The `s21_sscanf()` function returns the number of input items
  * successfully matched and assigned, or `-1` (EOF) if an input failure occurs
