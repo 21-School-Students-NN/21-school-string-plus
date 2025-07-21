@@ -2,7 +2,7 @@
 # Compiler Configuration
 # =============================================================================
 CC				::=		gcc
-CFLAGS			::=		-Wall -Werror -Wextra -std=c11 -pedantic -I./headers
+CFLAGS			::=		-Wall -Werror -Wextra -std=c11 -pedantic -I./headers -lm
 TST_FLAG		::=		$(shell pkg-config --cflags --libs check)
 COV_FLAGS		::=		-fprofile-arcs -ftest-coverage
 DBG_FLAGS		::=		-g
@@ -161,7 +161,7 @@ style_format: $(LIB_SOURCE) $(TST_SOURCE)
 style_check: $(LIB_SOURCE) $(TST_SOURCE)
 	$(info Checking style with clang-format and cppcheck...)
 	@clang-format -n --style="{BasedOnStyle: Google}" --Werror $(LIB_SOURCE) $(TST_SOURCE)
-	@cppcheck --enable=all --force --suppress=missingIncludeSystem --error-exitcode=1 $(LIB_SOURCE) $(TST_SOURCE)
+	@cppcheck --enable=all --force --suppress=missingIncludeSystem --check-level=exhaustive --error-exitcode=1 $(LIB_SOURCE) $(TST_SOURCE)
 	@echo "Style check passed successfully!"
 
 # =============================================================================
