@@ -2,7 +2,7 @@
 # Compiler Configuration
 # =============================================================================
 CC				::=		gcc
-CFLAGS			::=		-Wall -Werror -Wextra -std=c11 -pedantic -lm
+CFLAGS			::=		-Wall -Werror -Wextra -std=c11 -pedantic -I./headers -lm
 TST_FLAG		::=		$(shell pkg-config --cflags --libs check)
 COV_FLAGS		::=		-fprofile-arcs -ftest-coverage
 DBG_FLAGS		::=		-g

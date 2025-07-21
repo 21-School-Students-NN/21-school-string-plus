@@ -1,4 +1,3 @@
-#include <check.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -14,6 +13,7 @@ int main(void) {
   srunner_add_suite(sr, s21_strncat_suite());
   srunner_add_suite(sr, s21_strtok_suite());
   srunner_add_suite(sr, s21_strchr_suite());
+  srunner_add_suite(sr, s21_strstr_suite());
   srunner_add_suite(sr, s21_strncpy_suite());
   srunner_add_suite(sr, s21_memcmp_suite());
   srunner_add_suite(sr, s21_strcspn_suite());
@@ -25,8 +25,12 @@ int main(void) {
   srunner_add_suite(sr, s21_strncmp_suite());
   srunner_add_suite(sr, s21_memcpy_suite());
   srunner_add_suite(sr, s21_sscanf_suite());
+  srunner_add_suite(sr, s21_trim_suite());
+  srunner_add_suite(sr, s21_insert_suite());
+  srunner_add_suite(sr, s21_to_lower_suite());
   srunner_add_suite(sr, s21_memchr_suite());
   srunner_add_suite(sr, s21_strrchr_suite());
+  srunner_add_suite(sr, s21_to_upper_suite());
 
   // Check for CK_RUN_SUITE and set a custom log file
   const char *suite = getenv("CK_RUN_SUITE");
@@ -38,7 +42,6 @@ int main(void) {
     srunner_set_log(sr, "../test.log");
   }
 
-  // srunner_set_log (sr, "../test.log");
   srunner_run_all(sr, CK_NORMAL);
   number_failed = srunner_ntests_failed(sr);
   srunner_free(sr);

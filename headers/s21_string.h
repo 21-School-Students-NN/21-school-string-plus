@@ -37,15 +37,27 @@ typedef unsigned long s21_size_t;
  * @note Notice how this comment made - you should also do it for yours func's.
  */
 void s21_example_func(void);
+
 /**
  * @brief Finds the first occurrence of c in first n bytes of str
- * @author Evgeniy Parfenyuk (Parthen/rhydonte)
- * @date Jule 3, 2025
+ * @author Evgeniy Parfenyuk (Parthen/rhydonte) x Demian Domozhirov (DarkDomian | trelawnm at 21 School)
+ * @date Jule 17, 2025
  * @version 1.0
  * @return return a pointer to the matching byte or S21_NULL
  * 	 if the character does not occur in the given memory area.
  */
 void *s21_memchr(const void *str, int c, s21_size_t n);
+
+/**
+ * @brief compares the first n bytes of str1 and str2.
+ * @return an integer less than, equal to, or greater than zero if the first n
+ bytes of s1 is found, respectively, to be less than, to match, or be greater
+ than the first n bytes of s2.
+ *
+ * @version 1.0
+ * @date June 12, 2025
+ * @author Amfir (s21: tyananai)
+ */
 int s21_memcmp(const void *str1, const void *str2, s21_size_t n);
 
 /** @brief copies n bytes from memory area src to memory area dest
@@ -59,6 +71,7 @@ int s21_memcmp(const void *str1, const void *str2, s21_size_t n);
  * @note Notice how this comment made - you should also do it for yours func's.
  */
 void *s21_memcpy(void *dest, const void *src, s21_size_t n);
+
 /** @brief Fill memory with a constant byte
  * @author Evgeniy Parfenyuk (Parthen/rhydonte)
  * @date June 16, 2025
@@ -78,6 +91,7 @@ void *s21_memset(void *str, int c, s21_size_t n);
  * @author Demian Domozhirov (DarkDomian | trelawnm at 21 School)
  */
 char *s21_strncat(char *dest, const char *src, s21_size_t n);
+
 /**
  * @brief Finds the first occurrence of c in str
  * @author Evgeniy Parfenyuk (Parthen/rhydonte)
@@ -158,6 +172,7 @@ s21_size_t s21_strlen(const char *str);
  * @author Demian Domozhirov (DarkDomian/trelawnm)
  */
 char *s21_strpbrk(const char *str1, const char *str2);
+
 /**
  * @brief Finds the last occurrence of c in str
  * @author Evgeniy Parfenyuk (Parthen/rhydonte)
@@ -167,6 +182,15 @@ char *s21_strpbrk(const char *str1, const char *str2);
  *   or S21_NULL if the character is not found.
  */
 char *s21_strrchr(const char *str, int c);
+
+/**
+ * @brief locate a substring
+ * @return These functions return a pointer to the beginning of the located substring, or `S21_NULL` if the substring is not found.
+ *
+ * @version 1.0
+ * @date June 20, 2025
+ * @author Mark Mindrin (@GOOD3113)
+ */
 char *s21_strstr(const char *haystack, const char *needle);
 
 /**
@@ -191,5 +215,47 @@ char *s21_strtok(char *str, const char *delim);
  * @author Amfir (s21: tyananai)
  */
 int s21_sscanf(const char *str, const char *format, ...);
+
+ /** @brief Returns
+ * @return a pointer to new string in which all leading and trailing
+ * occurrences of
+ * @param trim_chars a set of specified characters from
+ * @param src the given string are removed.
+ * In case of any error, return NULL.
+ * @date July 11, 2025
+ * @author Anton Gashturi (bernieer)
+ */
+void *s21_trim(const char *src, const char *trim_chars);
+
+/** @brief Returns a new string in which a specified
+ * @param str string is inserted at
+ * @param start_index a specified index position in
+ * @param src the given string
+ * @author Anton Gashturi (Parthen/rhydonte)
+ * @return a pointer to `dest`
+ * @date July 8, 2025
+ * @version 1.0
+ */
+void *s21_insert(const char *src, const char *str, s21_size_t start_index);
+
+/**
+ * @brief returns a copy of string (str) converted to lowercase
+ * @return void* pointer to a copy of string (str) converted to lowercase. In
+ * case of any error, return NULL
+ * @param str source string
+ * @version 1.0
+ * @date July 8, 2025
+ * @author Anton Gashturi (bernieer)
+ */
+void *s21_to_lower(const char *str);
+
+/**
+ * @brief Returns a copy of string (str) converted to uppercase
+ * @param str pointer to source string
+ * @return pointer to destination string
+ * @date July 07, 2025
+ * @author Anton Gashturi (bernieer)
+ */
+void *s21_to_upper(const char *str);
 
 #endif
