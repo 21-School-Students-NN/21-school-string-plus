@@ -3,8 +3,6 @@
 #include <stdio.h>
 
 #include "../headers/s21_string.h"
-#include "s21_strlen.c"
-#include "s21_strncmp.c"
 /**
  * there is a comment about table work
  */
