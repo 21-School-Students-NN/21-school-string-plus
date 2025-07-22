@@ -21,23 +21,15 @@ jobs:
 
     - name: Install dependencies
       run: |
-        sudo apt update
-        sudo apt install -y \
-          git \
-          git-lfs \
-          curl \
-          jq \
-          bash \
+        sudo apt-get update
+        sudo apt-get install -y \
           build-essential \
-          python3 \
-          valgrind \
-          cppcheck \
-          lcov \
-          check \
           pkg-config \
-          libpcre3-dev \
-          libpcre2-dev \
-          clang-format-18
+          check \
+          valgrind \
+          clang-format \
+          cppcheck \
+          lcov
 
     - name: Style check and auto-format
       run: |
