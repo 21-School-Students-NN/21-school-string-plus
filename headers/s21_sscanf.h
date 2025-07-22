@@ -1,10 +1,10 @@
 #ifndef SSCANF_H
 #define SSCANF_H
 
-#include <stdarg.h>
 #include <ctype.h>
 #include <limits.h>
 #include <math.h>
+#include <stdarg.h>
 #include <stdint.h>
 
 typedef enum {

@@ -1,1 +1,1 @@
--Wall -Werror -Wextra -std=c11 -pedantic -lm
+-Wall -Werror -Wextra -std=c11 -pedantic -I./headers -lm

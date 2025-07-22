@@ -9,4 +9,4 @@ typedef struct {
   char length;
 } format_config;
 
-#endif // S21_SPRINTF_H
+#endif  // S21_SPRINTF_H
