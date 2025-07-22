@@ -1,7 +1,5 @@
 #include "../headers/s21_sscanf.h"
 
-#include <stdio.h>
-
 #include "../headers/s21_string.h"
 /**
  * there is a comment about table work
