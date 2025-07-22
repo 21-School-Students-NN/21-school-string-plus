@@ -11,6 +11,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    container: alpine:latest
     permissions:
       contents: write
 
@@ -19,17 +20,24 @@ jobs:
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Install dependencies
+    - name: Install dependencies (Alphine)
       run: |
-        sudo apt-get update
-        sudo apt-get install -y \
-          build-essential \
-          pkg-config \
-          check \
+        apk --no-cache --upgrade add \
+          git \
+          git-lfs \
+          curl \
+          jq \
+          bash \
+          build-base \
+          python3 \
           valgrind \
-          clang-format \
           cppcheck \
-          lcov
+          alpine-sdk \
+          pcre-dev \
+          pcre2 \
+          clang18-extra-tools && \
+          ln -s /usr/lib/llvm18/bin/clang-format /usr/bin/clang-format 
+
 
     - name: Style check and auto-format
       run: |
