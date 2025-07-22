@@ -32,6 +32,8 @@ jobs:
           python3 \
           valgrind \
           cppcheck \
+          check-dev \
+          lcov \
           alpine-sdk \
           pcre-dev \
           pcre2 \
