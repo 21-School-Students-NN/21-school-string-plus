@@ -164,7 +164,7 @@ static int add_substring(char *str, const char *buffer, format_config conf) {
 /**
  * initialize of format_config struct
  */
-void config_init(format_config *conf) {
+static void config_init(format_config *conf) {
   conf->width = 0;
   conf->precision = -1;
   conf->flags = 0;
@@ -174,7 +174,7 @@ void config_init(format_config *conf) {
 /**
  * parcer for formated string
  */
-const char *format_parse(format_config *conf, const char *f) {
+static const char *format_parse(format_config *conf, const char *f) {
   while (*f == '-' || *f == '+' || *f == ' ') {
     if (*f == '-') conf->flags |= MINUS;  // flag '-'
     if (*f == '+') conf->flags |= PLUS;   // flag '+'
