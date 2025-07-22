@@ -40,7 +40,8 @@ void s21_example_func(void);
 
 /**
  * @brief Finds the first occurrence of c in first n bytes of str
- * @author Evgeniy Parfenyuk (Parthen/rhydonte) x Demian Domozhirov (DarkDomian | trelawnm at 21 School)
+ * @author Evgeniy Parfenyuk (Parthen/rhydonte) x Demian Domozhirov (DarkDomian
+ * | trelawnm at 21 School)
  * @date Jule 17, 2025
  * @version 1.0
  * @return return a pointer to the matching byte or S21_NULL
@@ -178,14 +179,15 @@ char *s21_strpbrk(const char *str1, const char *str2);
  * @author Evgeniy Parfenyuk (Parthen/rhydonte)
  * @date Jul 2, 2025
  * @version 1.0
- * @return the `s21_strrchr()` function return a pointer to the matched character
- *   or S21_NULL if the character is not found.
+ * @return the `s21_strrchr()` function return a pointer to the matched
+ * character or S21_NULL if the character is not found.
  */
 char *s21_strrchr(const char *str, int c);
 
 /**
  * @brief locate a substring
- * @return These functions return a pointer to the beginning of the located substring, or `S21_NULL` if the substring is not found.
+ * @return These functions return a pointer to the beginning of the located
+ * substring, or `S21_NULL` if the substring is not found.
  *
  * @version 1.0
  * @date June 20, 2025
@@ -227,7 +229,7 @@ int s21_sprintf(char *str, const char *format, ...);
  */
 int s21_sscanf(const char *str, const char *format, ...);
 
- /** @brief Returns
+/** @brief Returns
  * @return a pointer to new string in which all leading and trailing
  * occurrences of
  * @param trim_chars a set of specified characters from

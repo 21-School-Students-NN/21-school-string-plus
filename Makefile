@@ -156,11 +156,11 @@ gcov_report: $(COV_FRONT_DIR) test
 # =============================================================================
 style_format: $(LIB_SOURCE) $(TST_SOURCE)
 	$(info Formatting code with clang-format...)
-	@clang-format -i --verbose --style="{BasedOnStyle: Google}" $(LIB_SOURCE) $(TST_SOURCE)
+	@clang-format -i --verbose --style="{BasedOnStyle: Google}" ./*/*.[h,c]
 
 style_check: $(LIB_SOURCE) $(TST_SOURCE)
 	$(info Checking style with clang-format and cppcheck...)
-	@clang-format -n --style="{BasedOnStyle: Google}" --Werror $(LIB_SOURCE) $(TST_SOURCE)
+	@clang-format -n --style="{BasedOnStyle: Google}" --Werror ./*/*.[h,c]
 	@cppcheck --enable=all --force --suppress=missingIncludeSystem --check-level=exhaustive --error-exitcode=1 $(LIB_SOURCE) $(TST_SOURCE)
 	@echo "Style check passed successfully!"
 

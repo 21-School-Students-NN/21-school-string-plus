@@ -527,7 +527,7 @@ _S(ERFKILL, "Operation not possible due to RF-kill")
 _S(EHWPOISON, "Memory page has hardware error")
 #endif
 
-#endif /* __linux__ */
+#endif           /* __linux__ */
 #ifdef __APPLE__ /* XNU-specific error messages */
 #ifdef ENXIO
 _S(ENXIO, "Device not configured")
